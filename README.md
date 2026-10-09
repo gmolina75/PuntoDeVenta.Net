@@ -265,5 +265,3 @@ No bloqueantes; quedan para el trabajo continuo.
   derivado del proyecto Ada369.
 - **Mantenido por:** Giancarlo Molina.
 - **Licencia:** ver el archivo [`LICENSE`](LICENSE).
-
-> **“Cualquiera puede programar.”**
