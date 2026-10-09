@@ -1,4 +1,4 @@
-# Ada369 C# — Sistema de Punto de Venta con Facturación Electrónica (SUNAT)
+# openPOS — Sistema de Punto de Venta con Facturación Electrónica (SUNAT)
 
 Aplicación de escritorio para **punto de venta (POS)** orientada a comercios pequeños y medianos
 (minimarkets, bodegas, farmacias, etc.). Integra venta rápida, control de caja por turnos, inventario
@@ -9,9 +9,9 @@ de escritorio.
 - **Framework:** .NET Framework **4.8**
 - **Base de datos:** Microsoft SQL Server / SQL Server Express (ADO.NET + procedimientos almacenados)
 - **Facturación electrónica:** cliente WCF contra el `billService` de SUNAT (UBL 2.1)
-- **Salida:** `Ada369 PE.exe`
+- **Salida:** `openPOS.exe`
 
-> **Fork de estudio / demostración.** Derivado del proyecto original Ada369. Actualmente **mantenido
+> **Fork de estudio / demostración.** Derivado del proyecto original. Actualmente **mantenido
 > por Giancarlo Molina**, con labores de documentación, modernización del build y eliminación de
 > dependencias comerciales.
 
@@ -37,7 +37,7 @@ de escritorio.
 
 ## Descripción general
 
-Ada369 es un POS de escritorio que cubre el ciclo operativo completo de un negocio de venta al
+openPOS es un POS de escritorio que cubre el ciclo operativo completo de un negocio de venta al
 detalle: desde la configuración inicial del negocio y la creación de la base de datos, pasando por la
 operación diaria de caja y ventas, hasta la emisión de comprobantes electrónicos aceptados por SUNAT.
 
@@ -96,7 +96,7 @@ El sistema incluye reportes operativos: **movimientos de kardex**, **inventario 
 
 ## Arquitectura
 
-La solución es un único proyecto (`Ada369Csharp`), organizado en capas:
+La solución es un único proyecto (`OpenPOS`), organizado en capas:
 
 ```
 Program.cs ──► LOGIN ──► Asistente de instalación (1.ª ejecución)
@@ -122,7 +122,7 @@ los procedimientos almacenados; luego `Registroempresa` y `UsuarioPrincipal`.
 - **Acceso a datos:** ADO.NET (`System.Data.SqlClient`), `DataTable`/`DataSet` y procedimientos almacenados.
 - **Base de datos:** Microsoft SQL Server / SQL Server Express.
 - **Facturación electrónica:** cliente WCF (`System.ServiceModel`) contra el `billService` de SUNAT (UBL 2.1).
-- **Reportes:** librería propia `Ada369Csharp.Reportes` (visor WinForms + impresión GDI+). **Sin Telerik.**
+- **Reportes:** librería propia `OpenPOS.Reportes` (visor WinForms + impresión GDI+). **Sin Telerik.**
 - **Compresión/ZIP:** `System.IO.Compression` (framework). **Sin DotNetZip.**
 - **Otros:** `System.Management` (serial del disco), `System.Net.Mail` (correo), `System.Windows.Forms.DataVisualization` (gráficas).
 
@@ -133,7 +133,7 @@ los procedimientos almacenados; luego `Registroempresa` y `UsuarioPrincipal`.
 - **.NET Framework 4.8** (targeting pack y runtime).
 - **SQL Server** (Express o Developer) accesible por *Integrated Security*.
 - **No requiere `sqlcmd`:** el asistente ejecuta el esquema mediante ADO.NET (`SqlScriptRunner`).
-- El manifiesto `ada369m.manifest` usa `asInvoker` (sin elevación permanente). Solo se solicita UAC al
+- El manifiesto `openPOS.manifest` usa `asInvoker` (sin elevación permanente). Solo se solicita UAC al
   lanzar el instalador de SQL Server Express.
 
 > No se requieren paquetes NuGet ni dependencias comerciales: el proyecto usa únicamente ensamblados
@@ -146,13 +146,13 @@ Guía detallada en **[docs/INSTALACION.md](docs/INSTALACION.md)**. Resumen:
 ```powershell
 # 1. Compilar (usar MSBuild de Visual Studio)
 $msbuild = "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe"
-& $msbuild Ada369Csharp.sln /p:Configuration=Debug
+& $msbuild OpenPOS.sln /p:Configuration=Debug
 
 # 2. Ejecutar pruebas (opcional)
-.\Ada369Csharp.Tests\bin\Debug\Ada369Csharp.Tests.exe
+.\OpenPOS.Tests\bin\Debug\OpenPOS.Tests.exe
 
 # 3. Ejecutar la aplicación
-.\Ada369Csharp\bin\Debug\"Ada369 PE.exe"
+.\OpenPOS\bin\Debug\openPOS.exe
 ```
 
 En la primera ejecución se lanza el **asistente de instalación**, que crea la base de datos (por
@@ -163,12 +163,12 @@ usuario principal.
 
 - **Cadena de conexión:** cifrada (AES-256) en `ConnectionString.xml`, generada por el asistente.
 - **Clave de cifrado:** ya **no** está incrustada en el código. `CONEXION/KeyProvider.cs` la resuelve,
-  en este orden: variable de entorno `ADA369_CRYPTO_KEY` → appSetting `Ada369:CryptoKey` →
-  archivo `ada369.key` protegido con DPAPI → clave heredada (con advertencia en el log). Ver
+  en este orden: variable de entorno `OPENPOS_CRYPTO_KEY` → appSetting `OpenPOS:CryptoKey` →
+  archivo `openpos.key` protegido con DPAPI → clave heredada (con advertencia en el log). Ver
   [docs/INSTALACION.md](docs/INSTALACION.md#clave-de-cifrado).
-- **Logs:** `Ada369Csharp/Logging/Logger.cs` escribe un log diario en
-  `%LOCALAPPDATA%\Ada369\logs` y muestra errores amigables sin exponer *stack traces*.
-- **Endpoints SUNAT:** en `Ada369Csharp/app.config` (servicio `billService`). Los modos de prueba (beta)
+- **Logs:** `OpenPOS/Logging/Logger.cs` escribe un log diario en
+  `%LOCALAPPDATA%\OpenPOS\logs` y muestra errores amigables sin exponer *stack traces*.
+- **Endpoints SUNAT:** en `OpenPOS/app.config` (servicio `billService`). Los modos de prueba (beta)
   se seleccionan dentro de los formularios de SUNAT.
 - **Script de base de datos:** `script.sql` (raíz) contiene el esquema completo. El asistente embebe su
   propia copia en `Presentacion/Asistenteinstalacion/Instalacionservidor.resx`.
@@ -176,17 +176,17 @@ usuario principal.
 ## Estructura del proyecto
 
 ```
-Ada369Csharp.sln              Solución (VS 2019+)
+OpenPOS.sln              Solución (VS 2019+)
 script.sql                    Esquema completo de la base de datos
 UIDC.dll                      Dependencia auxiliar (referenciada por el proyecto)
 LICENSE                       Licencia del proyecto
 .github/workflows/build.yml   Pipeline de CI
 docs/INSTALACION.md           Guía de instalación y puesta en marcha
-Ada369Csharp.Tests/           Pruebas automatizadas (ejecutor propio, sin NuGet)
-Ada369Csharp/
+OpenPOS.Tests/           Pruebas automatizadas (ejecutor propio, sin NuGet)
+OpenPOS/
   Program.cs                  Punto de entrada
   app.config                  Configuración WCF (SUNAT)
-  ada369m.manifest            Manifiesto (asInvoker)
+  openPOS.manifest            Manifiesto (asInvoker)
   Logging/                    Logger centralizado
   CONEXION/                   Conexión maestra, cifrado (KeyProvider) y SqlScriptRunner
   Datos/                      Acceso a datos por entidad
@@ -210,10 +210,10 @@ usuarios/permisos y comprobantes electrónicos.
 
 ## Estado del proyecto
 
-- **Compila y genera `Ada369 PE.exe`** con .NET Framework 4.8; incluye **pruebas automatizadas** y
+- **Compila y genera `openPOS.exe`** con .NET Framework 4.8; incluye **pruebas automatizadas** y
   **CI** (GitHub Actions) que compila en Release y ejecuta las pruebas.
 - **Sin dependencias comerciales:** se retiró **Telerik Reporting** y **DotNetZip**; los reportes usan
-  la librería propia `Ada369Csharp.Reportes` y el ZIP usa `System.IO.Compression`.
+  la librería propia `OpenPOS.Reportes` y el ZIP usa `System.IO.Compression`.
 - **Seguridad:** la clave AES ya no está incrustada (ver `KeyProvider`); el SQL dinámico sensible está
   parametrizado/saneado; el ejecutable corre como `asInvoker`.
 - El asistente de instalación **no depende de `sqlcmd`**: ejecuta el esquema desde ADO.NET.
@@ -233,7 +233,7 @@ usuarios/permisos y comprobantes electrónicos.
   - Ejecución de scripts T-SQL por lotes `GO` desde ADO.NET (`CONEXION/SqlScriptRunner.cs`), con
     parámetros de nombre de BD y carpeta de datos.
 - **Calidad y DevOps**
-  - Proyecto de **pruebas** (`Ada369Csharp.Tests`, sin NuGet) que cubre el divisor de lotes, el
+  - Proyecto de **pruebas** (`OpenPOS.Tests`, sin NuGet) que cubre el divisor de lotes, el
     saneamiento de identificadores y el ciclo de cifrado AES.
   - **Pipeline CI** en `.github/workflows/build.yml`.
   - `app.config` alineado a **v4.8**; limpieza de artefactos de VS (`_UpgradeWizard_Files/`,
@@ -262,6 +262,6 @@ No bloqueantes; quedan para el trabajo continuo.
 ## Créditos y licencia
 
 - **Fork original:** [gmolina75/PuntoDeVenta.Net](https://github.com/gmolina75/PuntoDeVenta.Net),
-  derivado del proyecto Ada369.
+  derivado del proyecto original.
 - **Mantenido por:** Giancarlo Molina.
 - **Licencia:** ver el archivo [`LICENSE`](LICENSE).

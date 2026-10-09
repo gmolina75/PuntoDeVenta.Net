@@ -241,9 +241,10 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-# ---- Proyecto Ada369 ----
+# ---- Proyecto openPOS ----
 # Secretos y configuración local (NO versionar)
 ConnectionString.xml
+openpos.key
 ada369.key
 app.config.local
 

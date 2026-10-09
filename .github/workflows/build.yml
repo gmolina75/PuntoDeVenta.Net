@@ -19,7 +19,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Compilar solución (Release)
-        run: msbuild Ada369Csharp.sln /p:Configuration=Release /restore /m /nologo /v:m
+        run: msbuild OpenPOS.sln /p:Configuration=Release /restore /m /nologo /v:m
 
       - name: Ejecutar pruebas
-        run: .\Ada369Csharp.Tests\bin\Release\Ada369Csharp.Tests.exe
+        run: .\OpenPOS.Tests\bin\Release\OpenPOS.Tests.exe

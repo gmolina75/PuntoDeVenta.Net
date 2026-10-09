@@ -1,6 +1,6 @@
 # Guía de instalación, compilación y puesta en marcha
 
-Esta guía explica cómo dejar **Ada369 C#** compilando y ejecutándose en una máquina Windows.
+Esta guía explica cómo dejar **openPOS** compilando y ejecutándose en una máquina Windows.
 
 ## 1. Requisitos previos
 
@@ -24,10 +24,10 @@ No hay restauración de paquetes. Compila directamente con MSBuild:
 
 ```powershell
 $msbuild = "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe"
-& $msbuild Ada369Csharp.sln /p:Configuration=Debug
+& $msbuild OpenPOS.sln /p:Configuration=Debug
 ```
 
-Salida: `Ada369Csharp\bin\Debug\Ada369 PE.exe`.
+Salida: `OpenPOS\bin\Debug\openPOS.exe`.
 
 > Si aparece el error `MSB3644: The reference assemblies for .NETFramework,Version=v4.6 were not found`,
 > verifica que el proyecto esté apuntando a **v4.8** (*Propiedades del proyecto → Aplicación →
@@ -37,7 +37,7 @@ Salida: `Ada369Csharp\bin\Debug\Ada369 PE.exe`.
 
 ### Opción A — Asistente de instalación (recomendado)
 
-Ejecuta `Ada369 PE.exe` en la primera ejecución:
+Ejecuta `openPOS.exe` en la primera ejecución:
 
 1. `LOGIN` intenta leer `ConnectionString.xml`. Si no existe, abre `Opcionesprincipales`.
 2. `Instalacionservidor` crea la base de datos y ejecuta el script de tablas/procedimientos.
@@ -70,9 +70,9 @@ La cadena de conexión **no** está en `app.config`; se guarda cifrada (AES-256)
 
 La clave **ya no está incrustada** en el código. `CONEXION/KeyProvider.cs` la resuelve en este orden:
 
-1. Variable de entorno **`ADA369_CRYPTO_KEY`** (recomendado en servidores/CI).
-2. appSetting **`Ada369:CryptoKey`** en `app.config`.
-3. Archivo **`ada369.key`** protegido con **DPAPI** junto al ejecutable.
+1. Variable de entorno **`OPENPOS_CRYPTO_KEY`** (recomendado en servidores/CI).
+2. appSetting **`OpenPOS:CryptoKey`** en `app.config`.
+3. Archivo **`openpos.key`** protegido con **DPAPI** junto al ejecutable.
 4. **Clave heredada** (compatibilidad con instalaciones existentes), registrando una advertencia en el
    log. Genera una clave nueva con `KeyProvider.GenerarYGuardar()`.
 
@@ -82,7 +82,7 @@ La clave **ya no está incrustada** en el código. `CONEXION/KeyProvider.cs` la 
 ## 5. Ejecutar
 
 ```powershell
-.\Ada369Csharp\bin\Debug\"Ada369 PE.exe"
+.\OpenPOS\bin\Debug\openPOS.exe
 ```
 
 La aplicación se ejecuta como usuario estándar (`asInvoker`); solo verás UAC si el asistente lanza el
@@ -90,13 +90,13 @@ instalador de SQL Server Express.
 
 ## 6. Reportes e impresión
 
-Los reportes usan la librería propia `Ada369Csharp.Reportes` (visor WinForms + impresión GDI+); **no se
+Los reportes usan la librería propia `OpenPOS.Reportes` (visor WinForms + impresión GDI+); **no se
 requiere Telerik ni ningún componente externo**. La impresión de tickets y reportes se realiza con
 `System.Drawing.Printing`.
 
 ## 7. Facturación electrónica (SUNAT)
 
-- Los endpoints del servicio `billService` están en `Ada369Csharp/app.config`.
+- Los endpoints del servicio `billService` están en `OpenPOS/app.config`.
 - Se requiere un **certificado digital** y credenciales `SOL` configuradas en los formularios de SUNAT.
 - La compresión de los envíos usa `System.IO.Compression` (framework), sin dependencias externas.
 
@@ -105,7 +105,7 @@ requiere Telerik ni ningún componente externo**. La impresión de tickets y rep
 | Síntoma | Causa probable | Solución |
 | --- | --- | --- |
 | `MSB3644` .NET v4.6 not found | Targeting pack desalineado | Apuntar el proyecto a **v4.8** (sección 2) |
-| No se crean las tablas | SQL Server no accesible o credenciales incorrectas | Revisar el log en `%LOCALAPPDATA%\Ada369\logs` e iniciar el servicio |
+| No se crean las tablas | SQL Server no accesible o credenciales incorrectas | Revisar el log en `%LOCALAPPDATA%\OpenPOS\logs` e iniciar el servicio |
 | "Error de conexión" al iniciar | SQL Server apagado o `ConnectionString.xml` inválido | Iniciar el servicio y borrar el archivo para re-ejecutar el asistente |
 | No se generan comprobantes | Certificado o credenciales SUNAT incorrectas | Revisar certificado y datos `SOL` |
 | Se pide UAC al abrir la app | Configuración heredada con `requireAdministrator` | Recompilar con el manifiesto actual (`asInvoker`) |
