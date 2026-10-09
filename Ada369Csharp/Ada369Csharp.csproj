@@ -761,7 +761,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="ada369pe.ico" />
-    <Content Include="Presentacion\LOGIN\HTMLPage1.html" />
     <None Include="Resources\oval.png" />
     <None Include="Resources\balanza.png" />
     <None Include="Resources\tres.png" />
