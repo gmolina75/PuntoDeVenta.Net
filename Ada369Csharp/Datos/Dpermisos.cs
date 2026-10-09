@@ -1,4 +1,4 @@
-﻿using Ada369Csharp.CONEXION;
+using Ada369Csharp.CONEXION;
 using Ada369Csharp.Logica;
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public void mostrar_PermisosXid(ref DataTable dt, Lpermisos parametros)
@@ -97,7 +97,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
     }

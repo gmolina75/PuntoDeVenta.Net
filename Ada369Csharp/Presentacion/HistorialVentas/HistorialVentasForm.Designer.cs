@@ -1,4 +1,4 @@
-﻿namespace Ada369Csharp.Presentacion.HistorialVentas
+namespace Ada369Csharp.Presentacion.HistorialVentas
 {
     partial class HistorialVentasForm
     {
@@ -58,7 +58,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.Pcancelado = new System.Windows.Forms.PictureBox();
             this.panelTicket = new System.Windows.Forms.Panel();
-            this.reportViewer1 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.reportViewer1 = new Ada369Csharp.Reportes.ReportViewer();
             this.panel3 = new System.Windows.Forms.Panel();
             this.menuStrip5 = new System.Windows.Forms.MenuStrip();
             this.btnEliminar = new System.Windows.Forms.ToolStripMenuItem();
@@ -423,13 +423,11 @@
             // 
             // reportViewer1
             // 
-            this.reportViewer1.AccessibilityKeyMap = null;
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reportViewer1.Location = new System.Drawing.Point(0, 85);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(490, 312);
             this.reportViewer1.TabIndex = 0;
-            this.reportViewer1.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // panel3
             // 
@@ -596,7 +594,7 @@
         internal System.Windows.Forms.ToolStripMenuItem btnReimprimir;
         internal System.Windows.Forms.MenuStrip menuStrip5;
         internal System.Windows.Forms.ToolStripMenuItem btnEliminar;
-        private Telerik.ReportViewer.WinForms.ReportViewer reportViewer1;
+        private Ada369Csharp.Reportes.ReportViewer reportViewer1;
         private System.Windows.Forms.Button btncerrar;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel5;

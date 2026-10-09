@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +13,7 @@ using Ada369Csharp.Logica;
 using Sunat.Logica;
 using Ada369Csharp.Presentacion.REPORTES.Impresion_de_comprobantes;
 using Ada369Csharp.Presentacion.SunatForms;
-using Telerik.Reporting.Processing;
+using Ada369Csharp.Reportes;
 
 namespace Ada369Csharp.Presentacion.HistorialVentas
 {
@@ -171,20 +171,12 @@ namespace Ada369Csharp.Presentacion.HistorialVentas
          
             try
             {
-                var DOCUMENTO = new PrintDocument();
-                DOCUMENTO.PrinterSettings.PrinterName = Impresora;
-                if (DOCUMENTO.PrinterSettings.IsValid)
-                {
-                    PrinterSettings printerSettings = new PrinterSettings();
-                    printerSettings.PrinterName = Impresora;
-                    ReportProcessor reportProcessor = new ReportProcessor();
-                    reportProcessor.PrintReport(reportViewer1.ReportSource, printerSettings);
-                }
+                ReportPainter.PrintTicket(reportViewer1.Report, Impresora);
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         private void btnEliminar_Click(object sender, EventArgs e)

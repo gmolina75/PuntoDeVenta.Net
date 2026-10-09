@@ -83,7 +83,7 @@ namespace Ada369Csharp.Presentacion.Configuraciones
 
         private void btndiseñador_Click(object sender, EventArgs e)
         {
-            var ctl = new Diseñoticket();
+            var ctl = new DisenoTicket();
             ctl.Dock = DockStyle.Fill;
             ctl.Size = new Size(Width, Height);
             Controls.Add(ctl);

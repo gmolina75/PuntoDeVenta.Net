@@ -240,3 +240,26 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# ---- Proyecto Ada369 ----
+# Secretos y configuración local (NO versionar)
+ConnectionString.xml
+ada369.key
+app.config.local
+
+# Logs de la aplicación
+logs/
+*.log
+
+# Copias de seguridad de la base de datos
+*.bak
+
+# Instalador de SQL Server Express y archivos generados por el asistente
+SQLEXPR_x86_ENU/
+SQLEXPR_x86_ENU.exe
+ConfigurationFile.ini
+*_script.txt
+
+# Artefactos del asistente de migración de Visual Studio
+_UpgradeWizard_Files/
+UpgradeWizardLog.xml

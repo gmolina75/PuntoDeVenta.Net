@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,7 +52,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
                 return false;
             }
         }
@@ -103,7 +103,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
                 return false;
             }
             finally
@@ -161,7 +161,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
                 return false;
             }
             finally

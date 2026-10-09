@@ -14,7 +14,7 @@ using System.IO;
 using System.Threading;
 using Ada369Csharp.Logica;
 using Ada369Csharp.Datos;
-using Ada369Csharp.Presentacion.REPORTES.REPORTES_DE_KARDEX_listo.Reporte_de_Kardex_diseño;
+using Ada369Csharp.Presentacion.REPORTES.REPORTES_DE_KARDEX_listo.Reporte_de_Kardex_diseno;
 using Ada369Csharp.Presentacion.REPORTES.REPORTES_DE_KARDEX_listo.REPORTES_DE_INVENTARIOS_todos;
 using Ada369Csharp.Presentacion.INVENTARIOS_KARDEX;
 

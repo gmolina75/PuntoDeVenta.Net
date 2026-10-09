@@ -1,4 +1,4 @@
-﻿using Ada369Csharp.CONEXION;
+using Ada369Csharp.CONEXION;
 using Ada369Csharp.Logica;
 using RestCsharp.Presentacion.Licencia;
 using System;
@@ -24,7 +24,7 @@ namespace Ada369Csharp.Datos
         //    }
         //    catch (Exception ex)
         //    {
-        //        MessageBox.Show(ex.StackTrace);
+        //        Ada369Csharp.Logging.Logger.ShowError(ex);
         //    }
         //    finally
         //    {
@@ -122,7 +122,7 @@ namespace Ada369Csharp.Datos
         //    }
         //    catch (Exception ex)
         //    {
-        //        MessageBox.Show(ex.StackTrace);
+        //        Ada369Csharp.Logging.Logger.ShowError(ex);
         //    }
         //    finally
         //    {
@@ -237,7 +237,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
             finally
             {
@@ -257,7 +257,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
             finally
             {
@@ -363,7 +363,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
             finally
             {
@@ -408,7 +408,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
             finally
             {

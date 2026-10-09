@@ -1,4 +1,4 @@
-﻿
+
 namespace Ada369Csharp.Presentacion.Ventas
 {
     partial class Puntodeventa
@@ -68,7 +68,7 @@ namespace Ada369Csharp.Presentacion.Ventas
             this.panelCobro = new System.Windows.Forms.Panel();
             this.dgClientes = new System.Windows.Forms.DataGridView();
             this.btnguardar = new System.Windows.Forms.Button();
-            this.reportViewer1 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.reportViewer1 = new Ada369Csharp.Reportes.ReportViewer();
             this.panelClienteFactura = new System.Windows.Forms.Panel();
             this.btnAgregarcliente = new System.Windows.Forms.Button();
             this.lblCliente = new System.Windows.Forms.Label();
@@ -653,12 +653,10 @@ namespace Ada369Csharp.Presentacion.Ventas
             // 
             // reportViewer1
             // 
-            this.reportViewer1.AccessibilityKeyMap = null;
             this.reportViewer1.Location = new System.Drawing.Point(672, 357);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(29, 22);
             this.reportViewer1.TabIndex = 637;
-            this.reportViewer1.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // panelClienteFactura
             // 
@@ -1062,7 +1060,7 @@ namespace Ada369Csharp.Presentacion.Ventas
         private System.Windows.Forms.Button btnmayoreo;
         private System.Windows.Forms.FlowLayoutPanel PanelOperaciones;
         private System.Windows.Forms.Panel panelCobro;
-        private Telerik.ReportViewer.WinForms.ReportViewer reportViewer1;
+        private Ada369Csharp.Reportes.ReportViewer reportViewer1;
         internal System.Windows.Forms.Button btnguardar;
         internal System.Windows.Forms.Label lblTotalref;
         internal System.Windows.Forms.Label label10;

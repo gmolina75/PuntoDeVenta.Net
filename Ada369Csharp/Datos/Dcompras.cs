@@ -1,4 +1,4 @@
-﻿using Ada369Csharp.CONEXION;
+using Ada369Csharp.CONEXION;
 using Ada369Csharp.Logica;
 using System;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
                 idcompra = 0;
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
             finally
@@ -133,7 +133,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
             finally

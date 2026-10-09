@@ -10,7 +10,16 @@ namespace Ada369Csharp.CONEXION
       static   private AES aes = new AES();
        static  public string CnString;
        static   string dbcnString ;
-        public  static string appPwdUnique = "Ada369.codigo369.BASEADA.Hola_Mundo";
+
+        /// <summary>
+        /// Clave maestra de cifrado. Ya no está incrustada en el código:
+        /// se resuelve mediante <see cref="KeyProvider"/> (entorno, configuración
+        /// o archivo protegido con DPAPI).
+        /// </summary>
+        public static string appPwdUnique
+        {
+            get { return KeyProvider.MasterKey; }
+        }
 
 
         public static object checkServer()

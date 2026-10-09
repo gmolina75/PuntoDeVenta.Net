@@ -1,4 +1,4 @@
-﻿using Ada369Csharp.CONEXION;
+using Ada369Csharp.CONEXION;
 using Sunat.Logica;
 using System;
 using System.Collections.Generic;
@@ -52,7 +52,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
                 idcliente = 0;
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
             finally
             {

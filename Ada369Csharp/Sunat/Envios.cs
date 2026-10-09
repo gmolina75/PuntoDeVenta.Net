@@ -173,9 +173,10 @@ namespace Ada369Csharp.Sunat
         }
         public string ComprimirZip(string nombrearchivo, string rutadestino)
         {
-            Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile();
-            zip.AddFile(nombrearchivo, "");
-            zip.Save(rutadestino);
+            using (var zip = ZipFile.Open(rutadestino, ZipArchiveMode.Create))
+            {
+                zip.CreateEntryFromFile(nombrearchivo, Path.GetFileName(nombrearchivo));
+            }
             string respuesta = "Listo";
             return respuesta;
         }

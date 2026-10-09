@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
 [assembly: AssemblyTitle("Ada369Csharp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Sistema de punto de venta Ada369")]
+[assembly: InternalsVisibleTo("Ada369Csharp.Tests")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Ada369Csharp")]

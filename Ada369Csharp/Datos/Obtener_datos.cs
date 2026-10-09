@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +32,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -49,7 +49,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -67,7 +67,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -85,7 +85,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -106,7 +106,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
 
@@ -127,7 +127,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
 
@@ -148,7 +148,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
 
@@ -310,7 +310,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void sumar_CreditoPorPagar(int idcaja, DateTime fi, DateTime ff, ref double monto)
@@ -368,7 +368,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
       
@@ -384,7 +384,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -401,7 +401,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void buscar_clientes(ref DataTable dt, string buscador)
@@ -417,7 +417,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void mostrarEstadosCuentaCliente(ref DataTable dt, int idcliente)
@@ -434,7 +434,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -452,7 +452,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void ReportePorCobrar(ref double Monto )
@@ -514,7 +514,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -531,7 +531,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void mostrarVentasGraficaFechas(ref DataTable dt,DateTime fi,DateTime ff)
@@ -549,7 +549,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void ReporteTotalVentas(ref double Monto)
@@ -613,7 +613,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void ReporteResumenVentasHoyEmpleado(ref DataTable dt, int idEmpleado)
@@ -630,7 +630,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -648,7 +648,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void ReporteResumenVentasEmpleadoFechas(ref DataTable dt, int idEmpleado, DateTime fi, DateTime ff)
@@ -667,7 +667,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -746,7 +746,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -763,7 +763,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -782,7 +782,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
 
             }
         }
@@ -798,7 +798,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
                
             }
         }
@@ -815,7 +815,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void ReporteGastosMesCombo(ref DataTable dt, int anio)
@@ -832,7 +832,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -850,7 +850,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void ReporteGastosAnioMesGrafica(ref DataTable dt, int año, string mes)
@@ -869,7 +869,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         //Caja
@@ -889,7 +889,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         public static void mostrarTemaCaja(ref string Tema)
@@ -908,7 +908,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -929,7 +929,7 @@ namespace Ada369Csharp.Datos
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         //Usuarios
@@ -944,7 +944,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         //Clientes
@@ -959,7 +959,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         //Proveedores
@@ -974,7 +974,7 @@ namespace Ada369Csharp.Datos
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 

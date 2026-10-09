@@ -1,4 +1,4 @@
-﻿namespace Ada369Csharp.Presentacion.REPORTES.REPORTES_DE_KARDEX_listo.REPORTES_DE_INVENTARIOS_todos
+namespace Ada369Csharp.Presentacion.REPORTES.REPORTES_DE_KARDEX_listo.REPORTES_DE_INVENTARIOS_todos
 {
     partial class FormReporteMovimientosFILTROS
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReporteMovimientosFILTROS));
-            this.reportViewer1 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.reportViewer1 = new Ada369Csharp.Reportes.ReportViewer();
             this.SuspendLayout();
             // 
             // reportViewer1
@@ -57,6 +57,6 @@
 
         #endregion
 
-        private Telerik.ReportViewer.WinForms.ReportViewer reportViewer1;
+        private Ada369Csharp.Reportes.ReportViewer reportViewer1;
     }
 }

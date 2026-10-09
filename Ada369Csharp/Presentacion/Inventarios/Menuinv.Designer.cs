@@ -1,4 +1,4 @@
-﻿namespace Ada369Csharp.Presentacion.Inventarios
+namespace Ada369Csharp.Presentacion.Inventarios
 {
     partial class Menuinv
     {
@@ -83,7 +83,7 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.Label6 = new System.Windows.Forms.Label();
             this.PanelREPORTEInventario = new System.Windows.Forms.Panel();
-            this.rptInventarios = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.rptInventarios = new Ada369Csharp.Reportes.ReportViewer();
             this.panel11 = new System.Windows.Forms.Panel();
             this.lblcostoInventario = new System.Windows.Forms.Label();
             this.lblcantidaddeProductosEnInventario = new System.Windows.Forms.Label();
@@ -101,7 +101,7 @@
             this.panel15 = new System.Windows.Forms.Panel();
             this.PanelKardex = new System.Windows.Forms.Panel();
             this.dgproductos = new System.Windows.Forms.DataGridView();
-            this.reportViewer1 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.reportViewer1 = new Ada369Csharp.Reportes.ReportViewer();
             this.panel13 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
             this.menuStrip12 = new System.Windows.Forms.MenuStrip();
@@ -829,13 +829,11 @@
             // 
             // rptInventarios
             // 
-            this.rptInventarios.AccessibilityKeyMap = null;
             this.rptInventarios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rptInventarios.Location = new System.Drawing.Point(0, 71);
             this.rptInventarios.Name = "rptInventarios";
             this.rptInventarios.Size = new System.Drawing.Size(54, 340);
             this.rptInventarios.TabIndex = 1;
-            this.rptInventarios.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // panel11
             // 
@@ -1063,13 +1061,11 @@
             // 
             // reportViewer1
             // 
-            this.reportViewer1.AccessibilityKeyMap = null;
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reportViewer1.Location = new System.Drawing.Point(0, 58);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(55, 231);
             this.reportViewer1.TabIndex = 1;
-            this.reportViewer1.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // panel13
             // 
@@ -1270,8 +1266,8 @@
         internal System.Windows.Forms.TextBox txtbuscarKardexMov;
         private System.Windows.Forms.Panel panel17;
         internal System.Windows.Forms.DataGridView dgproductos;
-        private Telerik.ReportViewer.WinForms.ReportViewer reportViewer1;
-        private Telerik.ReportViewer.WinForms.ReportViewer rptInventarios;
+        private Ada369Csharp.Reportes.ReportViewer reportViewer1;
+        private Ada369Csharp.Reportes.ReportViewer rptInventarios;
         private System.Windows.Forms.Button btnIngreso;
         private System.Windows.Forms.Button btnSalida;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

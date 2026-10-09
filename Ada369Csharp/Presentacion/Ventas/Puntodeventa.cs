@@ -1,4 +1,4 @@
-﻿using Ada369Csharp.Datos;
+using Ada369Csharp.Datos;
 using Ada369Csharp.Logica;
 using Sunat.Logica;
 using Ada369Csharp.Presentacion.CAJA;
@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Telerik.Reporting.Processing;
+using Ada369Csharp.Reportes;
 
 namespace Ada369Csharp.Presentacion.Ventas
 {
@@ -129,7 +129,7 @@ namespace Ada369Csharp.Presentacion.Ventas
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -337,7 +337,7 @@ namespace Ada369Csharp.Presentacion.Ventas
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 
@@ -527,7 +527,7 @@ namespace Ada369Csharp.Presentacion.Ventas
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
 
         }
@@ -558,20 +558,11 @@ namespace Ada369Csharp.Presentacion.Ventas
             MostrarImpresora();
             try
             {
-                var DOCUMENTO = new PrintDocument();
-                DOCUMENTO.PrinterSettings.PrinterName = Impresora;
-                if (DOCUMENTO.PrinterSettings.IsValid)
-                {
-                    PrinterSettings printerSettings = new PrinterSettings();
-                    printerSettings.PrinterName = Impresora;
-                    ReportProcessor reportProcessor = new ReportProcessor();
-                    reportProcessor.PrintReport(reportViewer1.ReportSource, printerSettings);
-                }
-
+                ReportPainter.PrintTicket(reportViewer1.Report, Impresora);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
         private void Ventanueva()
@@ -896,13 +887,13 @@ namespace Ada369Csharp.Presentacion.Ventas
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.StackTrace);
+                    Ada369Csharp.Logging.Logger.ShowError(ex);
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace);
+                Ada369Csharp.Logging.Logger.ShowError(ex);
             }
         }
 

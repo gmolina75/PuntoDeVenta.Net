@@ -1,4 +1,4 @@
-﻿namespace Ada369Csharp.Presentacion.REPORTES
+namespace Ada369Csharp.Presentacion.REPORTES
 {
     partial class MenuReportes
     {
@@ -41,7 +41,7 @@
             this.PanelBienvenida = new System.Windows.Forms.Panel();
             this.Label1 = new System.Windows.Forms.Label();
             this.panelVentas = new System.Windows.Forms.Panel();
-            this.reportViewer1 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.reportViewer1 = new Ada369Csharp.Reportes.ReportViewer();
             this.panel6 = new System.Windows.Forms.Panel();
             this.PanelEmpleado = new System.Windows.Forms.Panel();
             this.txtEmpleado = new System.Windows.Forms.ComboBox();
@@ -63,7 +63,7 @@
             this.btnEmpleado = new System.Windows.Forms.Button();
             this.PVentasPorempleado = new System.Windows.Forms.Panel();
             this.PanelProductos = new System.Windows.Forms.Panel();
-            this.ReportViewer3 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.ReportViewer3 = new Ada369Csharp.Reportes.ReportViewer();
             this.FlowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btnInventarios = new System.Windows.Forms.Button();
@@ -75,7 +75,7 @@
             this.btnStockBajo = new System.Windows.Forms.Button();
             this.PStockBajo = new System.Windows.Forms.Panel();
             this.PanelPorCobrarPagar = new System.Windows.Forms.Panel();
-            this.reportViewer2 = new Telerik.ReportViewer.WinForms.ReportViewer();
+            this.reportViewer2 = new Ada369Csharp.Reportes.ReportViewer();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
@@ -267,13 +267,11 @@
             // 
             // reportViewer1
             // 
-            this.reportViewer1.AccessibilityKeyMap = null;
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reportViewer1.Location = new System.Drawing.Point(0, 187);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(369, 157);
             this.reportViewer1.TabIndex = 3;
-            this.reportViewer1.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // panel6
             // 
@@ -548,13 +546,11 @@
             // 
             // ReportViewer3
             // 
-            this.ReportViewer3.AccessibilityKeyMap = null;
             this.ReportViewer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ReportViewer3.Location = new System.Drawing.Point(0, 53);
             this.ReportViewer3.Name = "ReportViewer3";
             this.ReportViewer3.Size = new System.Drawing.Size(1260, 497);
             this.ReportViewer3.TabIndex = 2;
-            this.ReportViewer3.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             this.ReportViewer3.Visible = false;
             // 
             // FlowLayoutPanel2
@@ -692,13 +688,11 @@
             // 
             // reportViewer2
             // 
-            this.reportViewer2.AccessibilityKeyMap = null;
             this.reportViewer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reportViewer2.Location = new System.Drawing.Point(0, 0);
             this.reportViewer2.Name = "reportViewer2";
             this.reportViewer2.Size = new System.Drawing.Size(401, 365);
             this.reportViewer2.TabIndex = 0;
-            this.reportViewer2.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // MenuReportes
             // 
@@ -760,7 +754,7 @@
         internal System.Windows.Forms.Panel panel5;
         internal System.Windows.Forms.Button btnEmpleado;
         internal System.Windows.Forms.Panel PVentasPorempleado;
-        private Telerik.ReportViewer.WinForms.ReportViewer reportViewer1;
+        private Ada369Csharp.Reportes.ReportViewer reportViewer1;
         internal System.Windows.Forms.Panel panel6;
         internal System.Windows.Forms.Panel PanelEmpleado;
         internal System.Windows.Forms.ComboBox txtEmpleado;
@@ -775,7 +769,7 @@
         internal System.Windows.Forms.MenuStrip MenuStrip6;
         internal System.Windows.Forms.ToolStripMenuItem TFILTROS;
         internal System.Windows.Forms.Panel PanelProductos;
-        internal Telerik.ReportViewer.WinForms.ReportViewer ReportViewer3;
+        internal Ada369Csharp.Reportes.ReportViewer ReportViewer3;
         internal System.Windows.Forms.FlowLayoutPanel FlowLayoutPanel2;
         internal System.Windows.Forms.Panel panel7;
         internal System.Windows.Forms.Button btnInventarios;
@@ -787,7 +781,7 @@
         internal System.Windows.Forms.Button btnStockBajo;
         internal System.Windows.Forms.Panel PStockBajo;
         private System.Windows.Forms.Panel PanelPorCobrarPagar;
-        private Telerik.ReportViewer.WinForms.ReportViewer reportViewer2;
+        private Ada369Csharp.Reportes.ReportViewer reportViewer2;
         private System.Windows.Forms.Button btncerrar;
     }
 }

@@ -82,7 +82,7 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
         private void ejecutar_scryt_crearBase_comprobacion_De_inicio()
         {
             var cnn = new SqlConnection("Server=" + txtservidor.Text + "; " + "database=master; integrated security=yes");
-            string s = "CREATE DATABASE " + TXTbasededatos.Text;
+            string s = "CREATE DATABASE " + CONEXION.SqlScriptRunner.IdentificadorSeguro(TXTbasededatos.Text);
             var cmd = new SqlCommand(s, cnn);
             try
             {
@@ -117,7 +117,7 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
         private void ejecutar_scryt_crearBase()
         {
             var cnn = new SqlConnection("Server=" + txtservidor.Text + "; " + "database=master; integrated security=yes");
-            string s = "CREATE DATABASE " + TXTbasededatos.Text;
+            string s = "CREATE DATABASE " + CONEXION.SqlScriptRunner.IdentificadorSeguro(TXTbasededatos.Text);
             var cmd = new SqlCommand(s, cnn);
             try
             {
@@ -129,6 +129,7 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
             }
             catch (Exception ex)
             {
+                Ada369Csharp.Logging.Logger.Error(ex, "No se pudo crear/aplicar el esquema de la base de datos.");
             }
 
             finally
@@ -141,47 +142,17 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
         private void ejecutar_scryt_crearProcedimientos_almacenados_y_tablas()
         {
             ruta = Path.Combine(Directory.GetCurrentDirectory(), txtnombre_scrypt.Text + ".txt");
-            FileInfo fi = new FileInfo(ruta);
-            StreamWriter sw;
-
             try
             {
-                if (File.Exists(ruta) == false)
-                {
-
-                    sw = File.CreateText(ruta);
-                    sw.WriteLine(txtCrear_procedimientos.Text);
-                    sw.Flush();
-                    sw.Close();
-                }
-                else if (File.Exists(ruta) == true)
-                {
-                    File.Delete(ruta);
-                    sw = File.CreateText(ruta);
-                    sw.WriteLine(txtCrear_procedimientos.Text);
-                    sw.Flush();
-                    sw.Close();
-                }
+                string cadena = "Server=" + txtservidor.Text + ";Database=master;Integrated Security=True;";
+                string script = CONEXION.SqlScriptRunner.Preparar(txtCrear_procedimientos.Text, TXTbasededatos.Text);
+                CONEXION.SqlScriptRunner.Ejecutar(cadena, script);
+                Ada369Csharp.Logging.Logger.Info("Esquema ejecutado correctamente en la base de datos " + TXTbasededatos.Text + ".");
             }
             catch (Exception ex)
             {
-
-            }
-
-            try
-            {
-                Process Pross = new Process();
-
-                Pross.StartInfo.FileName = "sqlcmd";
-                Pross.StartInfo.Arguments = " -S " + txtservidor.Text + " -i " + txtnombre_scrypt.Text + ".txt";
-                Pross.Start();
-
-
-                ////////Timer1.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                //acaba = False
+                Ada369Csharp.Logging.Logger.Error(ex, "Error al ejecutar el script de tablas y procedimientos.");
+                throw;
             }
         }
         public void SavetoXML(object dbcnString)
@@ -208,8 +179,7 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
             }
             catch (Exception ex)
             {
-
-
+                Ada369Csharp.Logging.Logger.Warn("Comprobación inicial de base de datos: " + ex.Message);
             }
             finally
             {
@@ -232,8 +202,7 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
             }
             catch (Exception ex)
             {
-
-
+                Ada369Csharp.Logging.Logger.Warn("No se pudo eliminar la base de datos previa: " + ex.Message);
             }
             finally
             {
@@ -309,6 +278,10 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
                 Pross.StartInfo.Arguments = "/ConfigurationFile=ConfigurationFile.ini /ACTION=Install /IACCEPTSQLSERVERLICENSETERMS /SECURITYMODE=SQL /SAPWD=" + lblcontraseña.Text + " /SQLSYSADMINACCOUNTS=" + nombre_del_equipo_usuario;
 
                 Pross.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                // El instalador de SQL Server requiere privilegios elevados: se solicita UAC
+                // aunque la aplicación se ejecute como usuario estándar.
+                Pross.StartInfo.UseShellExecute = true;
+                Pross.StartInfo.Verb = "runas";
                 Pross.Start();
 
                 Panel4.Visible = true;
@@ -317,7 +290,7 @@ namespace Ada369Csharp.Presentacion.Asistenteinstalacion
             }
             catch (Exception ex)
             {
-
+                Ada369Csharp.Logging.Logger.Error(ex, "No se pudo iniciar el instalador de SQL Server Express.");
             }
         }
 

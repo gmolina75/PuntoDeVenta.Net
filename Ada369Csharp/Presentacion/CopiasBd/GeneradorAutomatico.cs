@@ -76,15 +76,20 @@ namespace Ada369Csharp.Presentacion.CopiasBd
             try
             {
                 string v_nombre_respaldo = Base_De_datos + ".bak";
+                string nombreDb = CONEXION.SqlScriptRunner.IdentificadorSeguro(Base_De_datos);
+                string rutaRespaldo = System.IO.Path.Combine(SubCarpeta, v_nombre_respaldo);
                 CONEXIONMAESTRA.abrir();
-                SqlCommand cmd = new SqlCommand("BACKUP DATABASE " + Base_De_datos + " TO DISK = '" + SubCarpeta + @"\" + v_nombre_respaldo + "'", CONEXIONMAESTRA.conectar);
+                SqlCommand cmd = new SqlCommand("BACKUP DATABASE " + nombreDb + " TO DISK = @ruta", CONEXIONMAESTRA.conectar);
+                cmd.Parameters.AddWithValue("@ruta", rutaRespaldo);
                 cmd.ExecuteNonQuery();
                 acaba = true;
             }
             catch (Exception ex)
             {
                 acaba = false;
-                MessageBox.Show(ex.Message);
+                Ada369Csharp.Logging.Logger.Error(ex, "No se pudo generar la copia de seguridad.");
+                MessageBox.Show("No se pudo generar la copia de seguridad. Revisa el registro de logs.",
+                    "Copias de seguridad", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void Mostrar_empresa()

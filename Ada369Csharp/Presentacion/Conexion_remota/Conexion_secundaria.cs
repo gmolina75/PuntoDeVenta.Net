@@ -1,4 +1,4 @@
-﻿using Ada369Csharp.CONEXION;
+using Ada369Csharp.CONEXION;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -92,7 +92,7 @@ namespace Ada369Csharp.Presentacion.Conexion_remota
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace); 
+                Ada369Csharp.Logging.Logger.ShowError(ex); 
             }
         }
         public void SavetoXML(object dbcnString)

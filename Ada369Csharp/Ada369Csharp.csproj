@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ada369Csharp</RootNamespace>
     <AssemblyName>Ada369 PE</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -75,19 +75,12 @@
     <ApplicationManifest>ada369m.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ionic.Zip-1.9.1.8.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
-    </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -103,12 +96,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="UIDC">
       <HintPath>..\UIDC.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Reporting, Version=13.0.19.116, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
-      <SpecificVersion>True</SpecificVersion>
-    </Reference>
-    <Reference Include="Telerik.ReportViewer.WinForms, Version=13.0.19.116, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
-      <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -186,11 +173,11 @@
     <Compile Include="Logica\Lusuarios.cs" />
     <Compile Include="Sunat\Logica\Lventas.cs" />
     <Compile Include="Sunat\Logica\Lresumendiario.cs" />
-    <Compile Include="Presentacion\Configuraciones\Diseñoticket.cs">
+    <Compile Include="Presentacion\Configuraciones\DisenoTicket.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Presentacion\Configuraciones\Diseñoticket.Designer.cs">
-      <DependentUpon>Diseñoticket.cs</DependentUpon>
+    <Compile Include="Presentacion\Configuraciones\DisenoTicket.Designer.cs">
+      <DependentUpon>DisenoTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Configuraciones\Usuariosconfig.cs">
       <SubType>UserControl</SubType>
@@ -426,36 +413,19 @@
     <Compile Include="Presentacion\Configuraciones\Productosconfig.Designer.cs">
       <DependentUpon>Productosconfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\Reportes\Impresion_de_comprobantes\Ticket_report.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\Impresion_de_comprobantes\Ticket_report.Designer.cs">
-      <DependentUpon>Ticket_report.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentacion\Reportes\MenuReportes.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Presentacion\Reportes\MenuReportes.Designer.cs">
       <DependentUpon>MenuReportes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\Reportes\RCobros\rptCobros.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\RCobros\rptCobros.Designer.cs">
-      <DependentUpon>rptCobros.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportePorCobrar\ReporteCobrar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportePorCobrar\ReporteCobrar.Designer.cs">
-      <DependentUpon>ReporteCobrar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportePorPagar\ReportePagar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportePorPagar\ReportePagar.Designer.cs">
-      <DependentUpon>ReportePagar.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Reportes\ReportModel.cs" />
+    <Compile Include="Reportes\ReportViewer.cs" />
+    <Compile Include="Reportes\ReportPainter.cs" />
+    <Compile Include="Reportes\ReportesModelos.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="CONEXION\KeyProvider.cs" />
+    <Compile Include="CONEXION\SqlScriptRunner.cs" />
     <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\FormMovimientosBuscar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -467,48 +437,6 @@
     </Compile>
     <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\FormReporteMovimientosFILTROS.Designer.cs">
       <DependentUpon>FormReporteMovimientosFILTROS.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportePbajomin.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportePbajomin.Designer.cs">
-      <DependentUpon>ReportePbajomin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportePVencidos.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportePVencidos.Designer.cs">
-      <DependentUpon>ReportePVencidos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\Reporte_Movimientos_con_filtros.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\Reporte_Movimientos_con_filtros.Designer.cs">
-      <DependentUpon>Reporte_Movimientos_con_filtros.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportInventarios_Todos.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportInventarios_Todos.Designer.cs">
-      <DependentUpon>ReportInventarios_Todos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportMovimientosBuscar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportMovimientosBuscar.Designer.cs">
-      <DependentUpon>ReportMovimientosBuscar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\Reporte_de_Kardex_diseño\ReportKARDEX_Movimientos_ok.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReportesKardex\Reporte_de_Kardex_diseño\ReportKARDEX_Movimientos_ok.Designer.cs">
-      <DependentUpon>ReportKARDEX_Movimientos_ok.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReporteVentas\ResumenVentas.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Reportes\ReporteVentas\ResumenVentas.Designer.cs">
-      <DependentUpon>ResumenVentas.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Configuraciones\Serializacionconfig.cs">
       <SubType>UserControl</SubType>
@@ -597,8 +525,8 @@
       <DependentUpon>Pruebassunat.cs</DependentUpon>
     </Compile>
     <Compile Include="Sunat\Resumenes\ResumenDiario.cs" />
-    <EmbeddedResource Include="Presentacion\Configuraciones\Diseñoticket.resx">
-      <DependentUpon>Diseñoticket.cs</DependentUpon>
+    <EmbeddedResource Include="Presentacion\Configuraciones\DisenoTicket.resx">
+      <DependentUpon>DisenoTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Configuraciones\Usuariosconfig.resx">
       <DependentUpon>Usuariosconfig.cs</DependentUpon>
@@ -717,44 +645,14 @@
     <EmbeddedResource Include="Presentacion\Configuraciones\Productosconfig.resx">
       <DependentUpon>Productosconfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\Impresion_de_comprobantes\Ticket_report.resx">
-      <DependentUpon>Ticket_report.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Reportes\MenuReportes.resx">
       <DependentUpon>MenuReportes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportePorCobrar\ReporteCobrar.resx">
-      <DependentUpon>ReporteCobrar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportePorPagar\ReportePagar.resx">
-      <DependentUpon>ReportePagar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\FormMovimientosBuscar.resx">
       <DependentUpon>FormMovimientosBuscar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\FormReporteMovimientosFILTROS.resx">
       <DependentUpon>FormReporteMovimientosFILTROS.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportePbajomin.resx">
-      <DependentUpon>ReportePbajomin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportePVencidos.resx">
-      <DependentUpon>ReportePVencidos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\Reporte_Movimientos_con_filtros.resx">
-      <DependentUpon>Reporte_Movimientos_con_filtros.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportInventarios_Todos.resx">
-      <DependentUpon>ReportInventarios_Todos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\REPORTES_DE_INVENTARIOS_todos\ReportMovimientosBuscar.resx">
-      <DependentUpon>ReportMovimientosBuscar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReportesKardex\Reporte_de_Kardex_diseño\ReportKARDEX_Movimientos_ok.resx">
-      <DependentUpon>ReportKARDEX_Movimientos_ok.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Reportes\ReporteVentas\ResumenVentas.resx">
-      <DependentUpon>ResumenVentas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Configuraciones\Serializacionconfig.resx">
       <DependentUpon>Serializacionconfig.cs</DependentUpon>
@@ -792,7 +690,6 @@
     <EmbeddedResource Include="Presentacion\Ventas\Puntodeventa.resx">
       <DependentUpon>Puntodeventa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -829,7 +726,6 @@
     </None>
     <None Include="Connected Services\servicioFacturacion2021\billService1.wsdl" />
     <None Include="Connected Services\servicioFacturacion2021\billService2.wsdl" />
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
