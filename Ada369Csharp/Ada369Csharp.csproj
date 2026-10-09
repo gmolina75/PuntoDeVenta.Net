@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>https://codigo369.com/wp-content/uploads/2020/05/797.jpg/</UpdateUrl>
+    <UpdateUrl>https://github.com/gmolina75/PuntoDeVenta.Net</UpdateUrl>
     <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>

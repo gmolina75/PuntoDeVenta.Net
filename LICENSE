@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020 codigo369 (autor original del sistema Ada369)
+Copyright (c) 2026 Giancarlo Molina (mantenedor de este fork)
 
 Por la presente se otorga permiso, sin cargo, a cualquier persona que obtenga una
 copia de este software y de los archivos de documentación asociados (el "Software"),
@@ -21,7 +21,7 @@ relacionada con el software o el uso u otras operaciones del software.
 
 ---
 
-Nota: Este repositorio es una copia de estudio/portafolio del sistema original
-creado por codigo369. Todos los derechos sobre el trabajo original pertenecen a su
-autor. Las dependencias de terceros (por ejemplo, componentes Telerik) fueron
+Nota: Este repositorio es un fork de estudio/portafolio, actualmente mantenido por
+Giancarlo Molina. Todos los derechos sobre el trabajo original pertenecen a sus
+autores. Las dependencias de terceros (por ejemplo, componentes Telerik) fueron
 retiradas; consulta el historial de Git para más detalles.

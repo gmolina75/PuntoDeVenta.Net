@@ -11,9 +11,9 @@ de escritorio.
 - **Facturación electrónica:** cliente WCF contra el `billService` de SUNAT (UBL 2.1)
 - **Salida:** `Ada369 PE.exe`
 
-> **Proyecto de estudio / demostración.** Elaborado originalmente por **Ing. Franklin J. Bustamante
-> Alejandría (codigo369)**. Este repositorio es una copia de trabajo con labores de documentación,
-> modernización del build y eliminación de dependencias comerciales.
+> **Fork de estudio / demostración.** Derivado del proyecto original Ada369. Actualmente **mantenido
+> por Giancarlo Molina**, con labores de documentación, modernización del build y eliminación de
+> dependencias comerciales.
 
 ---
 
@@ -261,13 +261,9 @@ No bloqueantes; quedan para el trabajo continuo.
 
 ## Créditos y licencia
 
-- **Autor original:** Ing. Franklin J. Bustamante Alejandría — [codigo369.com](https://codigo369.com)
-  — Canales: [YouTube](https://www.youtube.com/c/Codigo369) ·
-  [Facebook](https://www.facebook.com/codigo.369.official) ·
-  [Instagram](https://www.instagram.com/codigo369/)
-- **Cursos:** [Versión 1 (sin fact. electrónica)](https://www.udemy.com/course/sistema-de-ventas-profesional-en-c-y-sqlserver/) ·
-  [Versión 2 (con fact. electrónica)](https://www.udemy.com/course/facturacion-electronica-sunat-ubl-21-peru-en-c-y-sqlserver/)
-- **Licencia:** ver el archivo [`LICENSE`](LICENSE). Es material de estudio del curso de codigo369;
-  respeta las condiciones del autor original antes de redistribuirlo o usarlo comercialmente.
+- **Fork original:** [gmolina75/PuntoDeVenta.Net](https://github.com/gmolina75/PuntoDeVenta.Net),
+  derivado del proyecto Ada369.
+- **Mantenido por:** Giancarlo Molina.
+- **Licencia:** ver el archivo [`LICENSE`](LICENSE).
 
 > **“Cualquiera puede programar.”**

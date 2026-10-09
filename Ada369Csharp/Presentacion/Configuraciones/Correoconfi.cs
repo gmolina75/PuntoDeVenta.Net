@@ -46,7 +46,7 @@ namespace Ada369Csharp.Presentacion.Configuraciones
         }
         private void PictureBox1_Click(object sender, EventArgs e)
         {
-            Process.Start("https://www.youtube.com/watch?v=HuZCS2OQ84g");
+            Process.Start("https://github.com/gmolina75/PuntoDeVenta.Net");
         }
 
         private void Correoconfi_Load(object sender, EventArgs e)
