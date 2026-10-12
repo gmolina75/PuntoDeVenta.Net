@@ -521,6 +521,37 @@ namespace OpenPOS.Presentacion.Asistenteinstalacion
             SavetoXML(_aes.Encrypt(csb.ConnectionString, CONEXION.Desencryptacion.appPwdUnique, 256));
             _consola.Info("Cadena de conexión cifrada y guardada en «ConnectionString.xml».");
             _consola.Info("La conexión usará el usuario SQL «" + ctx.UsuarioDb + "» y la base «" + ctx.BaseDatos + "».");
+
+            VerificarLoginSql(ctx);
+        }
+
+        private void VerificarLoginSql(Contexto ctx)
+        {
+            var csb = new SqlConnectionStringBuilder
+            {
+                DataSource = ctx.Servidor,
+                InitialCatalog = "master",
+                IntegratedSecurity = false,
+                UserID = ctx.UsuarioDb,
+                Password = ctx.Password,
+                ConnectTimeout = 5
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(csb.ConnectionString))
+                {
+                    conexion.Open();
+                    _consola.Info("La cuenta SQL «" + ctx.UsuarioDb + "» ya puede conectarse a la instancia.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _consola.Aviso(
+                    "La cuenta SQL «" + ctx.UsuarioDb + "» aún no puede conectarse: " + ex.Message + ". " +
+                    "Si se instaló sobre una instancia ya existente, reinicia el servicio SQL Server " +
+                    "(Services.msc → MSSQLServer / MSSQL$SQLEXPRESS) para activar la autenticación mixta.");
+            }
         }
 
         public void SavetoXML(object dbcnString)
