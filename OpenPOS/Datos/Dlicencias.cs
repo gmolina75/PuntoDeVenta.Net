@@ -148,7 +148,7 @@ namespace OpenPOS.Datos
                     FechaFinLicencia = separadas[2];
                     EstadoLicencia = separadas[3];
                     NombreSoftwareLicencia = separadas[4];
-                    if (NombreSoftwareLicencia == "Ada_369")
+                    if (NombreSoftwareLicencia == "Ada_369" || NombreSoftwareLicencia == "OpenPOS")
                     {
                         if (EstadoLicencia == "PENDIENTE")
                         {

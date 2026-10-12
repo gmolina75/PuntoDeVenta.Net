@@ -49,7 +49,7 @@ namespace OpenPOS.Presentacion.Ventas
             this.Panel15 = new System.Windows.Forms.Panel();
             this.lbltotal = new System.Windows.Forms.Label();
             this.panelBienvenida = new System.Windows.Forms.Panel();
-            this.LogoAda369 = new System.Windows.Forms.PictureBox();
+            this.LogoOpenPOS = new System.Windows.Forms.PictureBox();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.dgDetalleventa = new System.Windows.Forms.DataGridView();
@@ -103,7 +103,7 @@ namespace OpenPOS.Presentacion.Ventas
             this.PanelTotales.SuspendLayout();
             this.Panel15.SuspendLayout();
             this.panelBienvenida.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoAda369)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoOpenPOS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgDetalleventa)).BeginInit();
             this.PanelOperaciones.SuspendLayout();
             this.panelCobro.SuspendLayout();
@@ -307,7 +307,7 @@ namespace OpenPOS.Presentacion.Ventas
             // panelBienvenida
             // 
             this.panelBienvenida.BackColor = System.Drawing.Color.White;
-            this.panelBienvenida.Controls.Add(this.LogoAda369);
+            this.panelBienvenida.Controls.Add(this.LogoOpenPOS);
             this.panelBienvenida.Controls.Add(this.panel12);
             this.panelBienvenida.Controls.Add(this.label8);
             this.panelBienvenida.Dock = System.Windows.Forms.DockStyle.Right;
@@ -316,17 +316,17 @@ namespace OpenPOS.Presentacion.Ventas
             this.panelBienvenida.Size = new System.Drawing.Size(270, 458);
             this.panelBienvenida.TabIndex = 612;
             // 
-            // LogoAda369
+            // LogoOpenPOS
             // 
-            this.LogoAda369.BackColor = System.Drawing.Color.Transparent;
-            this.LogoAda369.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LogoAda369.Image = global::OpenPOS.Properties.Resources.monedas;
-            this.LogoAda369.Location = new System.Drawing.Point(0, 143);
-            this.LogoAda369.Name = "LogoAda369";
-            this.LogoAda369.Size = new System.Drawing.Size(270, 116);
-            this.LogoAda369.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.LogoAda369.TabIndex = 0;
-            this.LogoAda369.TabStop = false;
+            this.LogoOpenPOS.BackColor = System.Drawing.Color.Transparent;
+            this.LogoOpenPOS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogoOpenPOS.Image = global::OpenPOS.Properties.Resources.openposbanner;
+            this.LogoOpenPOS.Location = new System.Drawing.Point(0, 143);
+            this.LogoOpenPOS.Name = "LogoOpenPOS";
+            this.LogoOpenPOS.Size = new System.Drawing.Size(270, 116);
+            this.LogoOpenPOS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LogoOpenPOS.TabIndex = 0;
+            this.LogoOpenPOS.TabStop = false;
             // 
             // panel12
             // 
@@ -1020,7 +1020,7 @@ namespace OpenPOS.Presentacion.Ventas
             this.PanelTotales.ResumeLayout(false);
             this.Panel15.ResumeLayout(false);
             this.panelBienvenida.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LogoAda369)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoOpenPOS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgDetalleventa)).EndInit();
             this.PanelOperaciones.ResumeLayout(false);
             this.panelCobro.ResumeLayout(false);
@@ -1050,7 +1050,7 @@ namespace OpenPOS.Presentacion.Ventas
         internal System.Windows.Forms.Panel Panel15;
         internal System.Windows.Forms.Label lbltotal;
         private System.Windows.Forms.Panel panelBienvenida;
-        private System.Windows.Forms.PictureBox LogoAda369;
+        private System.Windows.Forms.PictureBox LogoOpenPOS;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label8;
         internal System.Windows.Forms.DataGridView dgDetalleventa;

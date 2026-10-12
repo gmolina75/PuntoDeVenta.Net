@@ -156,11 +156,11 @@
             this.Label10.Name = "Label10";
             this.Label10.Size = new System.Drawing.Size(187, 46);
             this.Label10.TabIndex = 1;
-            this.Label10.Text = "ADA 369";
+            this.Label10.Text = "OpenPOS";
             // 
             // PictureBox7
             // 
-            this.PictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox7.Image")));
+            this.PictureBox7.Image = global::OpenPOS.Properties.Resources.openposlogo;
             this.PictureBox7.Location = new System.Drawing.Point(191, 12);
             this.PictureBox7.Name = "PictureBox7";
             this.PictureBox7.Size = new System.Drawing.Size(110, 63);
@@ -253,7 +253,7 @@
             // 
             // Panel1
             // 
-            this.Panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel1.BackgroundImage")));
+            this.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(182)))), ((int)(((byte)(201)))));
             this.Panel1.Location = new System.Drawing.Point(555, 113);
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(3, 135);
@@ -261,7 +261,7 @@
             // 
             // Panel2
             // 
-            this.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel2.BackgroundImage")));
+            this.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(182)))), ((int)(((byte)(201)))));
             this.Panel2.Location = new System.Drawing.Point(653, 313);
             this.Panel2.Name = "Panel2";
             this.Panel2.Size = new System.Drawing.Size(3, 139);
@@ -269,7 +269,7 @@
             // 
             // PictureBox1
             // 
-            this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
+            this.PictureBox1.Image = global::OpenPOS.Properties.Resources.eleccion_servidor_cliente;
             this.PictureBox1.Location = new System.Drawing.Point(236, 113);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(472, 339);

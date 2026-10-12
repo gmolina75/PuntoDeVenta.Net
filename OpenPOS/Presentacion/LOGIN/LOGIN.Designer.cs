@@ -112,7 +112,7 @@
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(100, 26);
             this.Label2.TabIndex = 611;
-            this.Label2.Text = "Ada 369";
+            this.Label2.Text = "OpenPOS";
             // 
             // PanelUsuarios
             // 
@@ -914,7 +914,7 @@
             this.lblpermisodeCaja.Name = "lblpermisodeCaja";
             this.lblpermisodeCaja.Size = new System.Drawing.Size(100, 26);
             this.lblpermisodeCaja.TabIndex = 611;
-            this.lblpermisodeCaja.Text = "Ada 369";
+            this.lblpermisodeCaja.Text = "OpenPOS";
             // 
             // lblnombredeCajero
             // 
@@ -925,7 +925,7 @@
             this.lblnombredeCajero.Name = "lblnombredeCajero";
             this.lblnombredeCajero.Size = new System.Drawing.Size(100, 26);
             this.lblnombredeCajero.TabIndex = 611;
-            this.lblnombredeCajero.Text = "Ada 369";
+            this.lblnombredeCajero.Text = "OpenPOS";
             // 
             // lblusuario_queinicioCaja
             // 
@@ -936,7 +936,7 @@
             this.lblusuario_queinicioCaja.Name = "lblusuario_queinicioCaja";
             this.lblusuario_queinicioCaja.Size = new System.Drawing.Size(100, 26);
             this.lblusuario_queinicioCaja.TabIndex = 611;
-            this.lblusuario_queinicioCaja.Text = "Ada 369";
+            this.lblusuario_queinicioCaja.Text = "OpenPOS";
             // 
             // LOGIN
             // 
@@ -950,7 +950,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LOGIN";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ada 369";
+            this.Text = "OpenPOS";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.LOGIN_Load);
             this.PanelUsuarios.ResumeLayout(false);

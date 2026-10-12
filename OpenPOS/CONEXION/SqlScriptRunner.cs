@@ -20,15 +20,35 @@ namespace OpenPOS.CONEXION
 
         public static void Ejecutar(string cadenaConexion, string script)
         {
+            Ejecutar(cadenaConexion, script, null);
+        }
+
+        /// <summary>
+        /// Ejecuta un script T-SQL lote a lote. Si se indica <paramref name="progreso"/>,
+        /// se invoca tras cada lote con (número de lote, total de lotes, primera línea).
+        /// </summary>
+        public static void Ejecutar(string cadenaConexion, string script, Action<int, int, string> progreso)
+        {
             if (string.IsNullOrWhiteSpace(script))
             {
                 return;
             }
 
             List<string> lotes = Dividir(script);
+
+            int total = 0;
+            foreach (string lote in lotes)
+            {
+                if (!string.IsNullOrWhiteSpace(lote))
+                {
+                    total++;
+                }
+            }
+
             using (var conexion = new SqlConnection(cadenaConexion))
             {
                 conexion.Open();
+                int indice = 0;
                 foreach (string lote in lotes)
                 {
                     if (string.IsNullOrWhiteSpace(lote))
@@ -41,8 +61,27 @@ namespace OpenPOS.CONEXION
                         comando.CommandTimeout = 0;
                         comando.ExecuteNonQuery();
                     }
+
+                    indice++;
+                    if (progreso != null)
+                    {
+                        progreso(indice, total, PrimeraLinea(lote));
+                    }
                 }
             }
+        }
+
+        private static string PrimeraLinea(string lote)
+        {
+            if (string.IsNullOrEmpty(lote))
+            {
+                return string.Empty;
+            }
+
+            int fin = lote.IndexOf('\n');
+            string linea = fin < 0 ? lote : lote.Substring(0, fin);
+            linea = linea.Trim();
+            return linea.Length > 90 ? linea.Substring(0, 90) : linea;
         }
 
         /// <summary>

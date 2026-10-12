@@ -13,7 +13,6 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>E:\Proyectos en Csharp\EbasicoAda369\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -52,7 +51,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ada369pe.ico</ApplicationIcon>
+    <ApplicationIcon>openpos.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>D0D5B19DAFA3820460154D3A075B87FB0009CD94</ManifestCertificateThumbprint>
@@ -106,6 +105,9 @@
     <Compile Include="CONEXION\Numeros_separadores.cs" />
     <Compile Include="CONEXION\total_en_letras.cs" />
     <Compile Include="CONEXION\WinAutoComplete.cs" />
+    <Compile Include="UI\Theme.cs" />
+    <Compile Include="UI\InstallConsole.cs" />
+    <Compile Include="Presentacion\Asistenteinstalacion\DatosInstalacionDialog.cs" />
     <Compile Include="Connected Services\servicioFacturacion2021\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -420,7 +422,9 @@
       <DependentUpon>MenuReportes.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\ReportModel.cs" />
-    <Compile Include="Reportes\ReportViewer.cs" />
+    <Compile Include="Reportes\ReportViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Reportes\ReportPainter.cs" />
     <Compile Include="Reportes\ReportesModelos.cs" />
     <Compile Include="Logging\Logger.cs" />
@@ -738,7 +742,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ada369.com.ico" />
+    <Content Include="openpos.com.ico" />
     <None Include="Resources\fotoagre.png" />
     <None Include="Resources\volverblanco.png" />
     <None Include="Resources\volverblack.png" />
@@ -760,7 +764,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ada369pe.ico" />
+    <Content Include="openpos.ico" />
     <None Include="Resources\oval.png" />
     <None Include="Resources\balanza.png" />
     <None Include="Resources\tres.png" />
@@ -798,7 +802,8 @@
     <None Include="Resources\azul.png" />
     <None Include="Resources\amarillo.png" />
     <None Include="Resources\advertencia.png" />
-    <None Include="Resources\ada369logo.png" />
+    <None Include="Resources\openposlogo.png" />
+    <None Include="Resources\openposbanner.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

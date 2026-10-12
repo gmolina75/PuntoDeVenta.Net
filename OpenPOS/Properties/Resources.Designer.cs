@@ -73,9 +73,29 @@ namespace OpenPOS.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ada369logo {
+        internal static System.Drawing.Bitmap openposlogo {
             get {
-                object obj = ResourceManager.GetObject("ada369logo", resourceCulture);
+                object obj = ResourceManager.GetObject("openposlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap openposbanner {
+            get {
+                object obj = ResourceManager.GetObject("openposbanner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eleccion_servidor_cliente {
+            get {
+                object obj = ResourceManager.GetObject("eleccion_servidor_cliente", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

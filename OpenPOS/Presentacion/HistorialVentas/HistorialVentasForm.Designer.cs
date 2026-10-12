@@ -381,7 +381,7 @@ namespace OpenPOS.Presentacion.HistorialVentas
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBox1.Image = global::OpenPOS.Properties.Resources.ada369logo;
+            this.pictureBox1.Image = global::OpenPOS.Properties.Resources.openposlogo;
             this.pictureBox1.Location = new System.Drawing.Point(0, 238);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(138, 93);

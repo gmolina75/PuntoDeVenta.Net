@@ -217,7 +217,7 @@ namespace OpenPOS.Presentacion.REPORTES
             this.Label66.Name = "Label66";
             this.Label66.Size = new System.Drawing.Size(87, 23);
             this.Label66.TabIndex = 612;
-            this.Label66.Text = "Ada 369";
+            this.Label66.Text = "OpenPOS";
             // 
             // PictureBox4
             // 

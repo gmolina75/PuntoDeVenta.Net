@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 using OpenPOS.CONEXION;
+using OpenPOS.Presentacion.Asistenteinstalacion;
+using OpenPOS.UI;
 
 namespace OpenPOS.Tests
 {
@@ -14,8 +18,28 @@ namespace OpenPOS.Tests
         private static int _fallos;
         private static int _ejecutadas;
 
-        private static int Main()
+        [STAThread]
+        private static int Main(string[] args)
         {
+            if (args != null && args.Length > 0 && args[0] == "--preview-console")
+            {
+                string destino = args.Length > 1
+                    ? args[1]
+                    : System.IO.Path.Combine(System.IO.Path.GetTempPath(), "openpos_consola.png");
+                VistaPreviaConsola(destino);
+                Console.WriteLine("Vista previa guardada en " + destino);
+                return 0;
+            }
+            if (args != null && args.Length > 0 && args[0] == "--preview-dialog")
+            {
+                string destino = args.Length > 1
+                    ? args[1]
+                    : System.IO.Path.Combine(System.IO.Path.GetTempPath(), "openpos_dialogo.png");
+                VistaPreviaDialogo(destino);
+                Console.WriteLine("Vista previa guardada en " + destino);
+                return 0;
+            }
+
             Console.WriteLine("== Pruebas openPOS ==");
 
             Check("SqlScriptRunner.Dividir separa por GO", () =>
@@ -83,9 +107,163 @@ namespace OpenPOS.Tests
                 Assert(descifrado == original, "El descifrado no coincide con el original");
             });
 
+            Check("Theme aplica la marca sin romper skins ni fuentes monoespaciadas", () =>
+            {
+                using (var f = new Form())
+                using (var skinBitmap = new Bitmap(2, 2))
+                using (var sans = new Font("Microsoft Sans Serif", 9f))
+                using (var mono = new Font("Consolas", 9f))
+                {
+                    var btn = new Button { Text = "Aceptar" };
+                    var skin = new Button { BackgroundImage = skinBitmap };
+                    var tb = new TextBox { Font = sans };
+                    var code = new TextBox { Font = mono };
+                    var grid = new DataGridView();
+                    f.Controls.Add(btn);
+                    f.Controls.Add(skin);
+                    f.Controls.Add(tb);
+                    f.Controls.Add(code);
+                    f.Controls.Add(grid);
+
+                    Theme.Apply(f);
+
+                    Assert(btn.FlatStyle == FlatStyle.Flat, "El boton no se aplanó");
+                    Assert(btn.BackColor == Theme.Primary, "El boton no usa el color de marca");
+                    Assert(skin.BackColor != Theme.Primary, "Se sobrescribió un boton con imagen");
+                    Assert(tb.Font.FontFamily.Name == "Segoe UI", "El textbox no usa Segoe UI");
+                    Assert(code.Font.FontFamily.Name == "Consolas", "Se cambió la fuente monoespaciada");
+                    Assert(grid.ColumnHeadersDefaultCellStyle.BackColor == Theme.Primary,
+                        "El encabezado de la grilla no usa la marca");
+                }
+            });
+
+            Check("InstallConsole registra pasos, log y progreso", () =>
+            {
+                using (var f = new Form())
+                using (var consola = new InstallConsole())
+                {
+                    f.Controls.Add(consola);
+                    f.Show();
+                    try
+                    {
+                        consola.Iniciar("Prueba");
+                        consola.DefinirPasos("Paso uno", "Paso dos");
+                        consola.PasoEnProceso(0);
+                        consola.PasoCompletado(0);
+                        consola.PasoFallo(1, "fallo simulado");
+                        consola.Info("mensaje de prueba");
+                        consola.SetProgreso(50);
+
+                        Assert(consola.TextoLog.Contains("mensaje de prueba"),
+                            "El registro no capturó el mensaje de prueba");
+                        Assert(consola.TextoLog.Contains("Paso uno"),
+                            "El registro no capturó el nombre del paso");
+                    }
+                    finally
+                    {
+                        consola.Detener();
+                        f.Close();
+                    }
+                }
+            });
+
+            Check("El diálogo de instalación acepta base de datos y credenciales editables", () =>
+            {
+                var inicial = new DatosInstalacion
+                {
+                    Instancia = "SQLEXPRESS",
+                    BaseDatos = "openpos",
+                    Usuario = "openPOS",
+                    Contrasena = string.Empty
+                };
+                using (var dlg = new DatosInstalacionDialog(inicial))
+                {
+                    Assert(dlg.Text.Contains("Datos de instalación"), "Título inesperado: " + dlg.Text);
+                    Assert(dlg.Resultado == null, "No debe haber resultado antes de confirmar");
+                }
+            });
+
             Console.WriteLine();
             Console.WriteLine(string.Format("Pruebas ejecutadas: {0}, fallos: {1}", _ejecutadas, _fallos));
             return _fallos == 0 ? 0 : 1;
+        }
+
+        private static void VistaPreviaConsola(string destino)
+        {
+            using (var f = new Form())
+            {
+                f.Text = "Vista previa - Consola de instalacion";
+                f.ClientSize = new Size(1360, 820);
+                f.StartPosition = FormStartPosition.CenterScreen;
+
+                var consola = new InstallConsole { Dock = DockStyle.Fill };
+                f.Controls.Add(consola);
+                f.Show();
+                Application.DoEvents();
+
+                consola.Iniciar("Instalando SQL Server Express en este equipo…");
+                consola.DefinirPasos(
+                    "Preparar los archivos de configuración",
+                    "Iniciar el instalador de SQL Server Express",
+                    "Instalar SQL Server Express (puede tardar varios minutos)",
+                    "Verificar la instancia recién instalada",
+                    "Eliminar la base de datos previa (si existe)",
+                    "Crear la base de datos BASE_TEST",
+                    "Ejecutar tablas y procedimientos almacenados",
+                    "Guardar la configuración de conexión",
+                    "Finalizar");
+
+                consola.PasoEnProceso(0);
+                consola.PasoCompletado(0);
+                consola.PasoEnProceso(1);
+                consola.PasoCompletado(1);
+                consola.PasoEnProceso(2);
+                consola.Info("Archivo de configuración escrito en «C:\\OpenPOS\\ConfigurationFile.ini».");
+                consola.Info("Solicitando permisos de administrador al instalador de SQL Server…");
+                consola.Info("Instalador iniciado (deje que la ventana de SQL Server finalice por sí sola).");
+                consola.Info("Instalando… 1 min 30 s transcurridos. El instalador continúa trabajando.");
+                consola.Aviso("La instancia aún no responde; reintentando (1/24)…");
+                consola.SetProgreso(22);
+
+                Application.DoEvents();
+                consola.PerformLayout();
+                Application.DoEvents();
+
+                using (var bmp = new Bitmap(consola.Width, consola.Height))
+                {
+                    consola.DrawToBitmap(bmp, new Rectangle(0, 0, consola.Width, consola.Height));
+                    bmp.Save(destino, System.Drawing.Imaging.ImageFormat.Png);
+                }
+
+                consola.Detener();
+                f.Close();
+            }
+        }
+
+        private static void VistaPreviaDialogo(string destino)
+        {
+            var inicial = new DatosInstalacion
+            {
+                Instancia = "SQLEXPRESS",
+                BaseDatos = "openpos",
+                Usuario = "openPOS",
+                Contrasena = string.Empty
+            };
+
+            using (var dlg = new DatosInstalacionDialog(inicial))
+            {
+                dlg.StartPosition = FormStartPosition.Manual;
+                dlg.Location = new Point(80, 80);
+                dlg.Show();
+                Application.DoEvents();
+
+                using (var bmp = new Bitmap(dlg.Width, dlg.Height))
+                {
+                    dlg.DrawToBitmap(bmp, new Rectangle(0, 0, dlg.Width, dlg.Height));
+                    bmp.Save(destino, System.Drawing.Imaging.ImageFormat.Png);
+                }
+                dlg.Close();
+            }
         }
 
         private static void Check(string nombre, Action prueba)

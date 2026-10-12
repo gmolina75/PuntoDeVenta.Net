@@ -3,6 +3,7 @@ using OpenPOS.Presentacion.AsistenteInstalacion;
 using OpenPOS.Presentacion.Compras;
 using OpenPOS.Presentacion.Menu;
 using OpenPOS.Sunat;
+using OpenPOS.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace OpenPOS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Theme.Enable();
             var frm = new LOGIN();
             frm.FormClosed += Frm_FormClosed;
             frm.ShowDialog();

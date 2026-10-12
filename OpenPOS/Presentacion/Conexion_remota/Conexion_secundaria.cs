@@ -55,8 +55,22 @@ namespace OpenPOS.Presentacion.Conexion_remota
         }
         private void conectar_manualmente()
         {
-            string IP = txtIp.Text;
-            cadena_de_conexion = "Data Source =" + IP + ";Initial Catalog=BASEADACURSO;Integrated Security=False;User Id=pruebas2020;Password=pruebas123";
+            string usuario = txtUsuario.Text.Trim();
+            if (usuario.Length == 0)
+            {
+                MessageBox.Show("Ingrese el usuario SQL", "Conexion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var csb = new SqlConnectionStringBuilder
+            {
+                DataSource = txtIp.Text,
+                InitialCatalog = "openpos",
+                IntegratedSecurity = false,
+                UserID = usuario,
+                Password = txtContrasena.Text
+            };
+            cadena_de_conexion = csb.ConnectionString;
             comprobar_conexion();
             if (indicador_de_conexion == "HAY CONEXION")
             {

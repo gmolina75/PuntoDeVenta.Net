@@ -34,9 +34,13 @@
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnconectar = new System.Windows.Forms.Button();
             this.txtIp = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtContrasena = new System.Windows.Forms.TextBox();
             this.Label5 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.Label2 = new System.Windows.Forms.Label();
+            this.Label6 = new System.Windows.Forms.Label();
+            this.Label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -59,9 +63,13 @@
             this.panel1.Controls.Add(this.PictureBox1);
             this.panel1.Controls.Add(this.btnconectar);
             this.panel1.Controls.Add(this.txtIp);
+            this.panel1.Controls.Add(this.txtUsuario);
+            this.panel1.Controls.Add(this.txtContrasena);
             this.panel1.Controls.Add(this.Label5);
             this.panel1.Controls.Add(this.Label1);
             this.panel1.Controls.Add(this.Label2);
+            this.panel1.Controls.Add(this.Label6);
+            this.panel1.Controls.Add(this.Label7);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel1.Location = new System.Drawing.Point(0, 190);
@@ -72,9 +80,9 @@
             // PictureBox1
             // 
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(119, 148);
+            this.PictureBox1.Location = new System.Drawing.Point(119, 200);
             this.PictureBox1.Name = "PictureBox1";
-            this.PictureBox1.Size = new System.Drawing.Size(343, 207);
+            this.PictureBox1.Size = new System.Drawing.Size(343, 160);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBox1.TabIndex = 635;
             this.PictureBox1.TabStop = false;
@@ -99,6 +107,24 @@
             this.txtIp.Size = new System.Drawing.Size(442, 26);
             this.txtIp.TabIndex = 630;
             // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Location = new System.Drawing.Point(119, 115);
+            this.txtUsuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(442, 26);
+            this.txtUsuario.TabIndex = 636;
+            this.txtUsuario.Text = "openPOS";
+            // 
+            // txtContrasena
+            // 
+            this.txtContrasena.Location = new System.Drawing.Point(119, 149);
+            this.txtContrasena.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtContrasena.Name = "txtContrasena";
+            this.txtContrasena.PasswordChar = '*';
+            this.txtContrasena.Size = new System.Drawing.Size(442, 26);
+            this.txtContrasena.TabIndex = 637;
+            // 
             // Label5
             // 
             this.Label5.AutoSize = true;
@@ -115,7 +141,7 @@
             // 
             this.Label1.AutoSize = true;
             this.Label1.ForeColor = System.Drawing.Color.White;
-            this.Label1.Location = new System.Drawing.Point(115, 125);
+            this.Label1.Location = new System.Drawing.Point(115, 410);
             this.Label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(61, 20);
@@ -132,6 +158,28 @@
             this.Label2.Size = new System.Drawing.Size(102, 20);
             this.Label2.TabIndex = 633;
             this.Label2.Text = "Ingresa la IP:";
+            // 
+            // Label6
+            // 
+            this.Label6.AutoSize = true;
+            this.Label6.ForeColor = System.Drawing.Color.White;
+            this.Label6.Location = new System.Drawing.Point(9, 118);
+            this.Label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Label6.Name = "Label6";
+            this.Label6.Size = new System.Drawing.Size(97, 20);
+            this.Label6.TabIndex = 638;
+            this.Label6.Text = "Usuario SQL:";
+            // 
+            // Label7
+            // 
+            this.Label7.AutoSize = true;
+            this.Label7.ForeColor = System.Drawing.Color.White;
+            this.Label7.Location = new System.Drawing.Point(9, 152);
+            this.Label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Label7.Name = "Label7";
+            this.Label7.Size = new System.Drawing.Size(103, 20);
+            this.Label7.TabIndex = 639;
+            this.Label7.Text = "Contraseña:";
             // 
             // Conexion_secundaria
             // 
@@ -159,8 +207,12 @@
         internal System.Windows.Forms.PictureBox PictureBox1;
         internal System.Windows.Forms.Button btnconectar;
         internal System.Windows.Forms.TextBox txtIp;
+        internal System.Windows.Forms.TextBox txtUsuario;
+        internal System.Windows.Forms.TextBox txtContrasena;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Label Label2;
+        internal System.Windows.Forms.Label Label6;
+        internal System.Windows.Forms.Label Label7;
     }
 }

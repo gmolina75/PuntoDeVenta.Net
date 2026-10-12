@@ -312,7 +312,7 @@ namespace OpenPOS.Sunat
             ////Agregar notas
             NoteType Nota = new NoteType();
             NoteType[] Notas = new NoteType[2];
-            Nota.Value = "Elaborado por codigo 369";
+            Nota.Value = "Elaborado por OpenPOS";
             Notas[0] = Nota;
             Firma.Note = Notas;
             ////Ingresar la razon social de la empresa emisora
@@ -2064,7 +2064,7 @@ namespace OpenPOS.Sunat
 
                     Resumenes.NoteType Nota = new Resumenes.NoteType();
 
-                    Nota.Value = "Elaborado por codigo 369";
+                    Nota.Value = "Elaborado por OpenPOS";
                     Firma.Note = Nota;
 
                     Resumenes.PartyNameType partyName = new Resumenes.PartyNameType();
@@ -2467,7 +2467,7 @@ namespace OpenPOS.Sunat
 
                 Bajas.NoteType Nota = new Bajas.NoteType();
 
-                Nota.Value = "Elaborado por codigo 369";
+                Nota.Value = "Elaborado por OpenPOS";
                 Firma.Note = Nota;
 
                 Bajas.PartyNameType partyName = new Bajas.PartyNameType();

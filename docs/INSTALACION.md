@@ -40,10 +40,11 @@ Salida: `OpenPOS\bin\Debug\openPOS.exe`.
 Ejecuta `openPOS.exe` en la primera ejecución:
 
 1. `LOGIN` intenta leer `ConnectionString.xml`. Si no existe, abre `Opcionesprincipales`.
-2. `Instalacionservidor` crea la base de datos y ejecuta el script de tablas/procedimientos.
-   - Servidor por defecto: `.\SQLEXPRESS`
-   - Base de datos por defecto: `BASEADACURSO`
-   - Usuario/contraseña de ejemplo: `pruebas2020` / `pruebas123`
+2. `Instalacionservidor` pide los datos en un cuadro de diálogo y crea la base de datos
+   ejecutando el script de tablas y procedimientos:
+   - Instancia, base de datos y credenciales de SQL Server: **se solicitan y son editables**
+   - Instancia por defecto: `SQLEXPRESS`
+   - Base de datos por defecto: `openpos`
 3. `Registroempresa` registra la empresa, la caja y el ticket.
 4. `UsuarioPrincipal` crea el usuario administrador.
 

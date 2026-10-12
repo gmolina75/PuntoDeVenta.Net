@@ -268,7 +268,7 @@ namespace OpenPOS.Presentacion.Configuraciones
             dlg.InitialDirectory = "";
             dlg.Filter = "Imagenes|*.jpg;*.png";
             dlg.FilterIndex = 2;
-            dlg.Title = "cargador de Imagenes Ada 369";
+            dlg.Title = "cargador de Imagenes OpenPOS";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 ImagenEmpresa.BackgroundImage = null;
