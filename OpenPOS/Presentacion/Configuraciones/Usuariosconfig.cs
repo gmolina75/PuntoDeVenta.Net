@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using OpenPOS.Datos;
 using OpenPOS.Logica;
+using OpenPOS;
 using System.IO;
 using System.Net.NetworkInformation;
 
@@ -22,6 +23,7 @@ namespace RestCsharp.Presentacion.Configuraciones
         bool procede;
         int idusuario;
         string estado;
+        string passwordAlmacenada;
        
       
 
@@ -47,6 +49,7 @@ namespace RestCsharp.Presentacion.Configuraciones
             txtcontraseña.Clear();
             txtusuario.Clear();
             txtcorreo.Clear();
+            passwordAlmacenada = null;
         }
         private void dibujarModulos()
         {
@@ -132,7 +135,7 @@ namespace RestCsharp.Presentacion.Configuraciones
             Dusuarios funcion = new Dusuarios();
             parametros.Nombre = txtnombre.Text;
             parametros.Login = txtusuario.Text;
-            parametros.Password = Bases.Encriptar(txtcontraseña.Text);
+            parametros.Password = PasswordHasher.Hash(txtcontraseña.Text);
             MemoryStream ms = new MemoryStream();
             Icono.Image.Save(ms, Icono.Image.RawFormat);
             parametros.Icono = ms.GetBuffer();
@@ -151,7 +154,7 @@ namespace RestCsharp.Presentacion.Configuraciones
             {
                 if (!string.IsNullOrEmpty(txtusuario.Text))
                 {
-                    if (!string.IsNullOrEmpty(txtcontraseña.Text))
+                    if (!string.IsNullOrEmpty(txtcontraseña.Text) || PasswordHasher.EsHash(passwordAlmacenada))
                     {
                         if (!string.IsNullOrEmpty(cbxRol.Text))
                         {
@@ -371,11 +374,18 @@ namespace RestCsharp.Presentacion.Configuraciones
             capturarIdUsuario();
             txtnombre.Text = datalistadoUsuarios.SelectedCells[3].Value.ToString();
             txtusuario.Text = datalistadoUsuarios.SelectedCells[4].Value.ToString();
-            txtcontraseña.Text = Bases.Desencriptar(datalistadoUsuarios.SelectedCells[5].Value.ToString());
+            passwordAlmacenada = datalistadoUsuarios.SelectedCells[5].Value.ToString();
+            // Las contraseñas con hash no se pueden recuperar: se deja el campo
+            // vacío y, si se guarda sin cambios, se conserva el hash actual.
+            txtcontraseña.Text = PasswordHasher.EsHash(passwordAlmacenada)
+                ? string.Empty
+                : Bases.Desencriptar(passwordAlmacenada);
             Icono.BackgroundImage = null;
-            byte[] b = (byte[])(datalistadoUsuarios.SelectedCells[6].Value);
-            MemoryStream ms = new MemoryStream(b);
-            Icono.Image = Image.FromStream(ms);
+            // Icono del usuario: si la celda no trae una imagen válida (nulo/DBNull)
+            // se usa el logo oficial en vez de fallar con la conversión (byte[]).
+            object iconoValor = datalistadoUsuarios.SelectedCells[6].Value;
+            Image avatar = iconoValor is byte[] ? UtilesSeguros.Imagen((byte[])iconoValor) : null;
+            Icono.Image = avatar ?? OpenPOS.Properties.Resources.openposlogo;
             txtcorreo.Text = datalistadoUsuarios.SelectedCells[7].Value.ToString();
             cbxRol.Text = datalistadoUsuarios.SelectedCells[8].Value.ToString();
 
@@ -431,7 +441,11 @@ namespace RestCsharp.Presentacion.Configuraciones
             parametros.IdUsuario = idusuario;
             parametros.Nombre = txtnombre.Text;
             parametros.Login = txtusuario.Text;
-            parametros.Password = Bases.Encriptar(txtcontraseña.Text);
+            // Si el campo quedó vacío y la contraseña actual es un hash, se conserva
+            // sin cambios; en caso contrario se guarda un hash nuevo.
+            parametros.Password = string.IsNullOrEmpty(txtcontraseña.Text) && PasswordHasher.EsHash(passwordAlmacenada)
+                ? passwordAlmacenada
+                : PasswordHasher.Hash(txtcontraseña.Text);
             MemoryStream ms = new MemoryStream();
             Icono.Image.Save(ms, Icono.Image.RawFormat);
             parametros.Icono = ms.GetBuffer();

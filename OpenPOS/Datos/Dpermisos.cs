@@ -75,11 +75,14 @@ namespace OpenPOS.Datos
 
                 da.Fill(dt);
 
-                CONEXIONMAESTRA.cerrar();
             }
             catch (Exception ex)
             {
                 OpenPOS.Logging.Logger.ShowError(ex);
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public void mostrar_PermisosXid(ref DataTable dt, Lpermisos parametros)
@@ -93,11 +96,14 @@ namespace OpenPOS.Datos
                 da.SelectCommand.Parameters.AddWithValue("@idusuario", parametros.IdUsuario);
                 da.Fill(dt);
 
-                CONEXIONMAESTRA.cerrar();
             }
             catch (Exception ex)
             {
                 OpenPOS.Logging.Logger.ShowError(ex);
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
     }

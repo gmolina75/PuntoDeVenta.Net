@@ -83,11 +83,14 @@ namespace OpenPOS.Datos
                 SqlDataAdapter da = new SqlDataAdapter("mostrar_Modulos", CONEXIONMAESTRA.conectar);
                 da.Fill(dt);
 
-                CONEXIONMAESTRA.cerrar();
             }
             catch (Exception ex)
             {
                 OpenPOS.Logging.Logger.ShowError(ex);
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
     }

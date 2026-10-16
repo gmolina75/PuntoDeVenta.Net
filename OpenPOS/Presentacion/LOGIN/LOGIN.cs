@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -70,27 +70,23 @@ namespace OpenPOS.Presentacion
 
                     b.Text = rdr["Login"].ToString();
                     b.Name = rdr["idUsuario"].ToString();
-                    b.Size = new Size(175, 25);
-                    b.Font = new Font("Microsoft Sans Serif", 13);
-                    b.BackColor = Color.FromArgb(20, 20, 20);
-                    b.ForeColor = Color.White;
+                    b.Size = new Size(176, 28);
+                    b.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+                    b.BackColor = Color.FromArgb(22, 22, 28);
+                    b.ForeColor = Color.FromArgb(237, 237, 242);
                     b.Dock = DockStyle.Bottom;
                     b.TextAlign = ContentAlignment.MiddleCenter;
                     b.Cursor = Cursors.Hand;
 
-                    p1.Size = new System.Drawing.Size(155, 167);
+                    p1.Size = new Size(176, 204);
                     p1.BorderStyle = BorderStyle.None;
-                    p1.BackColor = Color.FromArgb(20, 20, 20);
+                    p1.BackColor = Color.FromArgb(22, 22, 28);
+                    p1.Padding = new Padding(0, 14, 0, 0);
 
-
-                    I1.Size = new System.Drawing.Size(175, 132);
+                    I1.Size = new Size(176, 160);
                     I1.Dock = DockStyle.Top;
-                    I1.BackgroundImage = null;
-                    byte[] bi = (Byte[])rdr["Icono"];
-
-                    MemoryStream ms = new MemoryStream(bi);
-                    I1.Image = Image.FromStream(ms);
                     I1.SizeMode = PictureBoxSizeMode.Zoom;
+                    I1.Image = ObtenerAvatar(rdr["Icono"]);
                     I1.Tag = rdr["Login"].ToString();
                     I1.Cursor = Cursors.Hand;
 
@@ -108,6 +104,61 @@ namespace OpenPOS.Presentacion
             catch (Exception ex)
             {
 
+            }
+        }
+
+        private Image ObtenerAvatar(object icono)
+        {
+            if (icono != null && icono != DBNull.Value && icono is byte[])
+            {
+                byte[] bi = (byte[])icono;
+                if (!EsImagenCaramelo(bi))
+                {
+                    try
+                    {
+                        using (MemoryStream ms = new MemoryStream(bi))
+                        {
+                            return Image.FromStream(ms);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            return Properties.Resources.openposlogo;
+        }
+
+        private bool EsImagenCaramelo(byte[] bytes)
+        {
+            try
+            {
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    using (Image img = Image.FromStream(ms))
+                    {
+                        using (Bitmap bmp = new Bitmap(img))
+                        {
+                            int n = 0;
+                            int caramelo = 0;
+                            int paso = Math.Max(1, (int)Math.Sqrt(bmp.Width * bmp.Height) / 100 + 1);
+                            for (int x = 0; x < bmp.Width; x += paso)
+                            {
+                                for (int y = 0; y < bmp.Height; y += paso)
+                                {
+                                    System.Drawing.Color c = bmp.GetPixel(x, y);
+                                    n++;
+                                    if (c.R > 200 && c.R > c.B + 60 && c.G > c.B + 40) caramelo++;
+                                }
+                            }
+                            return n > 0 && (100.0 * caramelo / n) > 8.0;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return true;
             }
         }
         private void mostrarRoles()
@@ -239,7 +290,7 @@ namespace OpenPOS.Presentacion
             var funcion = new Dusuarios();
             var parametros = new Lusuarios();
             parametros.Login = txtlogin;
-            parametros.Password = Bases.Encriptar(txtpaswwor.Text);
+            parametros.Password = txtpaswwor.Text;
             funcion.validarUsuario(parametros, ref idusuario);
         }
 

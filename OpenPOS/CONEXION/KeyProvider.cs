@@ -17,16 +17,26 @@ namespace OpenPOS.CONEXION
     /// </summary>
     public static class KeyProvider
     {
-        /// <summary>Clave heredada de instalaciones previas. No debe cambiarse.</summary>
-        private const string LegacyKey = "Ada369.codigo369.BASEADA.Hola_Mundo";
+        /// <summary>Clave heredada de instalaciones previas. Solo se usa para
+        /// descifrar archivos cifrados antes de la migración a clave local.</summary>
+        internal const string LegacyKey = "Ada369.codigo369.BASEADA.Hola_Mundo";
         private const string EnvVar = "OPENPOS_CRYPTO_KEY";
         private const string SettingName = "OpenPOS:CryptoKey";
         private const string KeyFileName = "openpos.key";
         private const string KeyFileNameLegacy = "ada369.key";
 
-        private static readonly Lazy<string> _masterKey = new Lazy<string>(Resolver);
+        private static Lazy<string> _masterKey = new Lazy<string>(Resolver);
 
         public static string MasterKey { get { return _masterKey.Value; } }
+
+        /// <summary>
+        /// Fuerza la re-resolución de la clave maestra (p. ej. después de
+        /// <see cref="GenerarYGuardar"/>).
+        /// </summary>
+        public static void Reset()
+        {
+            _masterKey = new Lazy<string>(Resolver);
+        }
 
         public static bool UsandoClaveHeredada
         {

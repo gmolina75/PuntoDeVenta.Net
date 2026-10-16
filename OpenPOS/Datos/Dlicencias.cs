@@ -1,4 +1,4 @@
-﻿using OpenPOS.CONEXION;
+using OpenPOS.CONEXION;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,7 +37,6 @@ namespace OpenPOS.Datos
                 CONEXIONMAESTRA.abrir();
                 SqlDataAdapter da = new SqlDataAdapter("Select * From Marcan", CONEXIONMAESTRA.conectar);
                 da.Fill(dt);
-                CONEXIONMAESTRA.cerrar();
                 fechaSistema.ToString("yyyy-MM-dd");
                 foreach (DataRow rdr in dt.Rows)
                 {
@@ -63,11 +62,11 @@ namespace OpenPOS.Datos
                             {
                                 if (estado == "?ACTIVO?")
                                 {
-                                    Resultado = "Licencia de prueba activa hasta el " + fechaFinal.ToString("dd/MM/yyyy");
+                                    Resultado = "";
                                 }
                                 else if (estado == "?ACTIVADO PRO?")
                                 {
-                                    Resultado = "Licencia PROFESIONAL activa hasta el " + fechaFinal.ToString("dd/MM/yyyy");
+                                    Resultado = "";
                                 }
                                 return true;
                             }
@@ -87,6 +86,10 @@ namespace OpenPOS.Datos
             catch (Exception ex)
             {
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
             return false;
         }

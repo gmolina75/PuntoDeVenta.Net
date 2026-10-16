@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -112,16 +112,24 @@ namespace OpenPOS.Logica
         }
         public static string Encriptar(string texto)
         {
+            return Encriptar(texto, Desencryptacion.appPwdUnique);
+        }
+
+        /// <summary>
+        /// Cifrado reversible histórico (TripleDES-ECB). Solo se conserva para
+        /// compatibilidad con datos cifrados antes de migrar a hash/clave local.
+        /// </summary>
+        internal static string Encriptar(string texto, string clave)
+        {
             try
             {
                 byte[] keyArray;
 
                 byte[] Arreglo_a_Cifrar = UTF8Encoding.UTF8.GetBytes(texto);
 
-
                 MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
 
-                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Desencryptacion.appPwdUnique));
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(clave));
 
                 hashmd5.Clear();
 
@@ -149,6 +157,17 @@ namespace OpenPOS.Logica
 
         public static string Desencriptar(string textoEncriptado)
         {
+            string resultado = DesencriptarConClave(textoEncriptado, Desencryptacion.appPwdUnique);
+            if (resultado == null && !CONEXION.KeyProvider.UsandoClaveHeredada)
+            {
+                // Dato cifrado antes de la migración a clave local.
+                resultado = DesencriptarConClave(textoEncriptado, CONEXION.KeyProvider.LegacyKey);
+            }
+            return resultado ?? textoEncriptado;
+        }
+
+        private static string DesencriptarConClave(string textoEncriptado, string clave)
+        {
             try
             {
                 byte[] keyArray;
@@ -156,7 +175,7 @@ namespace OpenPOS.Logica
 
                 MD5CryptoServiceProvider hashmd5 = new MD5CryptoServiceProvider();
 
-                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Desencryptacion.appPwdUnique));
+                keyArray = hashmd5.ComputeHash(UTF8Encoding.UTF8.GetBytes(clave));
 
                 hashmd5.Clear();
 
@@ -171,14 +190,13 @@ namespace OpenPOS.Logica
                 byte[] resultArray = cTransform.TransformFinalBlock(Array_a_Descifrar, 0, Array_a_Descifrar.Length);
 
                 tdes.Clear();
-                textoEncriptado = UTF8Encoding.UTF8.GetString(resultArray);
+                return UTF8Encoding.UTF8.GetString(resultArray);
 
             }
             catch (Exception)
             {
-
+                return null;
             }
-            return textoEncriptado;
         }
         public static bool  enviarCorreo(string emisor, string password, string mensaje, string asunto, string destinatario, string ruta)
         {

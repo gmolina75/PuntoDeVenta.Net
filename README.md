@@ -264,4 +264,7 @@ No bloqueantes; quedan para el trabajo continuo.
 - **Fork original:** [gmolina75/PuntoDeVenta.Net](https://github.com/gmolina75/PuntoDeVenta.Net),
   derivado del proyecto original.
 - **Mantenido por:** Giancarlo Molina.
+- **Iconos:** los recursos gráficos se generaron a partir de la fuente
+  [Material Icons](https://github.com/google/material-design-icons) de Google, licencia
+  [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 - **Licencia:** ver el archivo [`LICENSE`](LICENSE).

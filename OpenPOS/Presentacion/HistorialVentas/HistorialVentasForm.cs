@@ -164,7 +164,8 @@ namespace OpenPOS.Presentacion.HistorialVentas
             var funcion = new Dcaja();
             var dt = new DataTable();
             funcion.MostrarImprTicket(ref dt);
-            Impresora = dt.Rows[0][0].ToString();
+            // Si no hay impresora configurada se deja vacía (sin caerse con Rows[0]).
+            Impresora = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0) : "";
         }
         private void imprimir_directo()
         {

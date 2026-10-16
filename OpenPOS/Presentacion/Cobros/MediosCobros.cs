@@ -41,7 +41,8 @@ namespace OpenPOS.Presentacion.Cobros
             var funcion = new DiniciosSesion();
             var dt = new DataTable();
             funcion.mostrarInicioSesionTable(ref dt);
-            idusuario = Convert.ToInt32(dt.Rows[0][2]);
+            // Si no hay sesión activa, se usa 0 en lugar de caerse con Rows[0].
+            idusuario = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Entero(UtilesSeguros.Celda(dt, 0, 2)) : 0;
         }
         private void calcularRestante()
         {

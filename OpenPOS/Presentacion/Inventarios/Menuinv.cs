@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -291,7 +291,7 @@ namespace OpenPOS.Presentacion.Inventarios
                 con.ConnectionString = CONEXION.CONEXIONMAESTRA.conexion;
                 con.Open();
 
-                da = new SqlDataAdapter("select*from USUARIO2", con);
+                da = new SqlDataAdapter("select*from Usuario", con);
 
                 da.Fill(dt);
                 txtUSUARIOS.DisplayMember = "Nombres_y_Apellidos";

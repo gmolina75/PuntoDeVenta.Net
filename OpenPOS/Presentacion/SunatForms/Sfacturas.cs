@@ -207,9 +207,10 @@ namespace OpenPOS.Presentacion.SunatForms
             var parametrosUbigeo = new Lcodigosubigeos();
             parametrosUbigeo.Ubigeo = ubigeo;
             funcion.ObtenerUbicaionXubigeo(ref dt, parametrosUbigeo);
-            parametros.Departamento = dt.Rows[0][0].ToString();
-            parametros.Provincia = dt.Rows[0][1].ToString();
-            parametros.Distrito = dt.Rows[0][2].ToString();
+            // Si el ubigeo no existe, se dejan vacíos en vez de explotar con Rows[0].
+            parametros.Departamento = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0) : "";
+            parametros.Provincia = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 1) : "";
+            parametros.Distrito = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
 
         }
         private void editarEstadoSunatVenta()

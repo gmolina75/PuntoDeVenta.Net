@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,6 +40,11 @@ namespace OpenPOS.Presentacion.Configuraciones
         string lblfechasvenci;
         int idproducto;
         string CodigoUdm;
+
+        private double ToDoubleSafe(string text)
+        {
+            return double.TryParse(text, out double result) ? result : 0;
+        }
 
         private void mostrarUnidadM()
         {
@@ -131,7 +136,8 @@ namespace OpenPOS.Presentacion.Configuraciones
             var funcion = new DiniciosSesion();
             var dt = new DataTable();
             funcion.mostrarInicioSesionTable(ref dt);
-            idusuario = Convert.ToInt32(dt.Rows[0][2]);
+            // Si no hay sesión activa, se usa 0 en lugar de caerse con Rows[0].
+            idusuario = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Entero(UtilesSeguros.Celda(dt, 0, 2)) : 0;
         }
 
         private void mostrar_grupos()
@@ -146,7 +152,7 @@ namespace OpenPOS.Presentacion.Configuraciones
                 dgGrupos.DataSource = dt;
                 dgGrupos.Columns[2].Visible = false;
                 dgGrupos.Columns[3].Width = 500;
-                dgGrupos.Visible = true;
+                
                 dgGrupos.Size = new Size(487, 190);
                 dgGrupos.Location = new Point(txtgrupo.Location.X, txtgrupo.Location.Y + 30);
                 dgGrupos.BringToFront();
@@ -220,7 +226,7 @@ namespace OpenPOS.Presentacion.Configuraciones
             if (usarInventarios == "SI")
             {
                 stock = txtstock.Text;
-                stockminimo = Convert.ToDouble(txtstockminimo.Text);
+                stockminimo = ToDoubleSafe(txtstockminimo.Text);
             }
             else
             {
@@ -260,17 +266,17 @@ namespace OpenPOS.Presentacion.Configuraciones
             parametros.Id_grupo = lblIdGrupo;
             parametros.Usa_inventarios = usarInventarios;
             parametros.Stock = stock;
-            parametros.Precio_de_compra = Convert.ToDouble(txtcosto.Text);
+            parametros.Precio_de_compra = ToDoubleSafe(txtcosto.Text);
             parametros.Fecha_de_vencimiento = fechaVencimiento;
-            parametros.Precio_de_venta = Convert.ToDouble(txtPrecioventa.Text);
+            parametros.Precio_de_venta = ToDoubleSafe(txtPrecioventa.Text);
             parametros.Codigo = txtcodigodebarras.Text;
             parametros.Se_vende_a = sevendea;
             parametros.Stock_minimo = stockminimo;
-            parametros.Precio_mayoreo = Convert.ToDouble(txtpreciomayoreo.Text);
-            parametros.A_partir_de = Convert.ToDouble(txtapartirde.Text);
+            parametros.Precio_mayoreo = ToDoubleSafe(txtpreciomayoreo.Text);
+            parametros.A_partir_de = ToDoubleSafe(txtapartirde.Text);
             parametros.CodigoSunat = codigoProdsunat;
             parametros.CodUm = txtum.SelectedValue.ToString();
-            parametros.Cantidad = Convert.ToDouble(txtstock.Text);
+            parametros.Cantidad = ToDoubleSafe(txtstock.Text);
             if (funcion.InsertarProducto(parametros) == true)
             {
                 Panelregistro.Visible = false;
@@ -294,17 +300,17 @@ namespace OpenPOS.Presentacion.Configuraciones
                 parametros.Id_grupo = lblIdGrupo;
                 parametros.Usa_inventarios = usarInventarios;
                 parametros.Stock = stock;
-                parametros.Precio_de_compra = Convert.ToDouble(txtcosto.Text);
+parametros.Precio_de_compra = ToDoubleSafe(txtcosto.Text);
                 parametros.Fecha_de_vencimiento = fechaVencimiento;
-                parametros.Precio_de_venta = Convert.ToDouble(txtPrecioventa.Text);
+parametros.Precio_de_venta = ToDoubleSafe(txtPrecioventa.Text);
                 parametros.Codigo = txtcodigodebarras.Text;
                 parametros.Se_vende_a = sevendea;
                 parametros.Stock_minimo = stockminimo;
-                parametros.Precio_mayoreo = Convert.ToDouble(txtpreciomayoreo.Text);
-                parametros.A_partir_de = Convert.ToDouble(txtapartirde.Text);
+parametros.Precio_mayoreo = ToDoubleSafe(txtpreciomayoreo.Text);
+parametros.A_partir_de = ToDoubleSafe(txtapartirde.Text);
                 parametros.CodigoSunat = codigoProdsunat;
                 parametros.CodUm = txtum.SelectedValue.ToString();
-                parametros.Cantidad = Convert.ToDouble(txtstock.Text);
+parametros.Cantidad = ToDoubleSafe(txtstock.Text);
                 if (funcion.Editarproductos(parametros) == true)
                 {
                     Panelregistro.Visible = false;
@@ -675,7 +681,8 @@ namespace OpenPOS.Presentacion.Configuraciones
             var dt = new DataTable();
             parametros.Codigo = CodigoUdm;
             funcion.mostrarUdmXcod(ref dt, parametros);
-            txtum.Text = dt.Rows[0][2].ToString();
+            // Si el código no existe, se deja vacío en vez de explotar con Rows[0].
+            txtum.Text = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
         }
         private void mostrarCodigoSunatXcod()
         {
@@ -684,7 +691,8 @@ namespace OpenPOS.Presentacion.Configuraciones
             var dt = new DataTable();
             parametros.codigo = codigoProdsunat;
             funcion.mostrarCodSunatXCod(ref dt, parametros);
-            txtcodigoSunat.Text = dt.Rows[0][1].ToString();
+            // Si el código SUNAT no existe, se deja vacío en vez de explotar con Rows[0].
+            txtcodigoSunat.Text = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 1) : "";
         }
         private void datalistado_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -845,22 +853,15 @@ namespace OpenPOS.Presentacion.Configuraciones
             {
                 if (txtcostoV >= precioventa)
                 {
-                    if (!string.IsNullOrEmpty(codigoProdsunat))
+                    DialogResult result;
+                    result = MessageBox.Show("El precio de Venta es menor que el COSTO, Esto Te puede Generar Perdidas", "Producto con Perdidas", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    if (result == DialogResult.OK)
                     {
-                        DialogResult result;
-                        result = MessageBox.Show("El precio de Venta es menor que el COSTO, Esto Te puede Generar Perdidas", "Producto con Perdidas", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                        if (result == DialogResult.OK)
-                        {
-                            insertar_productos();
-                        }
-                        else
-                        {
-                            txtPrecioventa.Focus();
-                        }
+                        insertar_productos();
                     }
                     else
                     {
-                        MessageBox.Show("Seleccione un codigo Sunat");
+                        txtPrecioventa.Focus();
                     }
                 }
                 else if (txtcostoV < precioventa)

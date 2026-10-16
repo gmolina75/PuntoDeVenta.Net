@@ -86,6 +86,7 @@
             this.lblpermisodeCaja = new System.Windows.Forms.Label();
             this.lblnombredeCajero = new System.Windows.Forms.Label();
             this.lblusuario_queinicioCaja = new System.Windows.Forms.Label();
+            this.lblPie = new System.Windows.Forms.Label();
             this.PanelUsuarios.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -116,6 +117,7 @@
             // 
             // PanelUsuarios
             // 
+            this.PanelUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(11)))), ((int)(((byte)(14)))));
             this.PanelUsuarios.Controls.Add(this.flowLayoutPanel1);
             this.PanelUsuarios.Controls.Add(this.panel1);
             this.PanelUsuarios.Controls.Add(this.panel6);
@@ -127,9 +129,11 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(11)))), ((int)(((byte)(14)))));
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 173);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(90, 20, 90, 24);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(359, 136);
             this.flowLayoutPanel1.TabIndex = 616;
             this.flowLayoutPanel1.Click += new System.EventHandler(this.flowLayoutPanel1_Click);
@@ -146,15 +150,15 @@
             // 
             // Label8
             // 
-            this.Label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(11)))), ((int)(((byte)(14)))));
             this.Label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label8.ForeColor = System.Drawing.Color.White;
+            this.Label8.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(236)))), ((int)(((byte)(240)))));
             this.Label8.Location = new System.Drawing.Point(0, 0);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(126, 173);
             this.Label8.TabIndex = 616;
-            this.Label8.Text = "¿Quien esta Iniciando Sesión?";
+            this.Label8.Text = "Selecciona tu perfil";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel10
@@ -166,6 +170,7 @@
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(233, 173);
             this.panel10.TabIndex = 617;
+            this.panel10.Visible = false;
             // 
             // pictureBox1
             // 
@@ -185,15 +190,30 @@
             this.lblestadoLicencia.Name = "lblestadoLicencia";
             this.lblestadoLicencia.Size = new System.Drawing.Size(184, 105);
             this.lblestadoLicencia.TabIndex = 622;
-            this.lblestadoLicencia.Text = "Licencia ";
+            this.lblestadoLicencia.Text = "";
             // 
             // panel6
             // 
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(11)))), ((int)(((byte)(14)))));
+            this.panel6.Controls.Add(this.lblPie);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel6.Location = new System.Drawing.Point(0, 309);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(359, 102);
             this.panel6.TabIndex = 617;
+            // 
+            // lblPie
+            // 
+            this.lblPie.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblPie.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(92)))), ((int)(((byte)(104)))));
+            this.lblPie.Location = new System.Drawing.Point(0, 76);
+            this.lblPie.Name = "lblPie";
+            this.lblPie.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.lblPie.Size = new System.Drawing.Size(359, 26);
+            this.lblPie.TabIndex = 625;
+            this.lblPie.Text = "OpenPOS · Punto de Venta";
+            this.lblPie.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PanelIngreso_de_contraseña
             // 
@@ -205,6 +225,7 @@
             this.PanelIngreso_de_contraseña.Controls.Add(this.btnborrartodo);
             this.PanelIngreso_de_contraseña.Controls.Add(this.flowLayoutPanel2);
             this.PanelIngreso_de_contraseña.Controls.Add(this.Label3);
+            this.PanelIngreso_de_contraseña.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(19)))));
             this.PanelIngreso_de_contraseña.Location = new System.Drawing.Point(17, 82);
             this.PanelIngreso_de_contraseña.Name = "PanelIngreso_de_contraseña";
             this.PanelIngreso_de_contraseña.Size = new System.Drawing.Size(397, 740);
@@ -217,8 +238,8 @@
             this.btncambioUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btncambioUsuario.FlatAppearance.BorderSize = 0;
             this.btncambioUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btncambioUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btncambioUsuario.ForeColor = System.Drawing.Color.DarkGray;
+            this.btncambioUsuario.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btncambioUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(150)))));
             this.btncambioUsuario.Location = new System.Drawing.Point(66, 517);
             this.btncambioUsuario.Name = "btncambioUsuario";
             this.btncambioUsuario.Size = new System.Drawing.Size(252, 35);
@@ -229,15 +250,13 @@
             // 
             // btn_insertar
             // 
-            this.btn_insertar.BackColor = System.Drawing.Color.Transparent;
-            this.btn_insertar.BackgroundImage = global::OpenPOS.Properties.Resources.naranja;
-            this.btn_insertar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_insertar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(46)))), ((int)(((byte)(140)))));
             this.btn_insertar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_insertar.FlatAppearance.BorderSize = 0;
-            this.btn_insertar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btn_insertar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btn_insertar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(30)))), ((int)(((byte)(92)))));
+            this.btn_insertar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(62)))), ((int)(((byte)(178)))));
             this.btn_insertar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_insertar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btn_insertar.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.btn_insertar.ForeColor = System.Drawing.Color.White;
             this.btn_insertar.Location = new System.Drawing.Point(68, 459);
             this.btn_insertar.Name = "btn_insertar";
@@ -249,6 +268,7 @@
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(19)))));
             this.panel3.Controls.Add(this.MenuStrip15);
             this.panel3.Controls.Add(this.Panel4);
             this.panel3.Controls.Add(this.txtpaswwor);
@@ -261,7 +281,7 @@
             // MenuStrip15
             // 
             this.MenuStrip15.AutoSize = false;
-            this.MenuStrip15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.MenuStrip15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(21)))));
             this.MenuStrip15.Dock = System.Windows.Forms.DockStyle.None;
             this.MenuStrip15.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tver,
@@ -277,9 +297,9 @@
             // 
             // tver
             // 
-            this.tver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.tver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(21)))));
             this.tver.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.tver.ForeColor = System.Drawing.Color.Black;
+            this.tver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(236)))), ((int)(((byte)(240)))));
             this.tver.Image = ((System.Drawing.Image)(resources.GetObject("tver.Image")));
             this.tver.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tver.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -290,9 +310,9 @@
             // 
             // tocultar
             // 
-            this.tocultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.tocultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(21)))));
             this.tocultar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.tocultar.ForeColor = System.Drawing.Color.Black;
+            this.tocultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(236)))), ((int)(((byte)(240)))));
             this.tocultar.Image = ((System.Drawing.Image)(resources.GetObject("tocultar.Image")));
             this.tocultar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tocultar.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -304,7 +324,7 @@
             // 
             // Panel4
             // 
-            this.Panel4.BackColor = System.Drawing.Color.White;
+            this.Panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(58)))));
             this.Panel4.Location = new System.Drawing.Point(16, 43);
             this.Panel4.Name = "Panel4";
             this.Panel4.Size = new System.Drawing.Size(310, 1);
@@ -312,10 +332,10 @@
             // 
             // txtpaswwor
             // 
-            this.txtpaswwor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.txtpaswwor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(21)))));
             this.txtpaswwor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtpaswwor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.txtpaswwor.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.txtpaswwor.Font = new System.Drawing.Font("Segoe UI", 22F);
             this.txtpaswwor.ForeColor = System.Drawing.Color.White;
             this.txtpaswwor.Location = new System.Drawing.Point(15, 10);
             this.txtpaswwor.Name = "txtpaswwor";
@@ -397,6 +417,7 @@
             this.flowLayoutPanel2.Controls.Add(this.btn9);
             this.flowLayoutPanel2.Controls.Add(this.btn8);
             this.flowLayoutPanel2.Controls.Add(this.btn7);
+            this.flowLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(19)))));
             this.flowLayoutPanel2.Location = new System.Drawing.Point(47, 118);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -594,15 +615,15 @@
             // 
             // Label3
             // 
-            this.Label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(19)))));
             this.Label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.ForeColor = System.Drawing.Color.White;
+            this.Label3.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(236)))), ((int)(((byte)(240)))));
             this.Label3.Location = new System.Drawing.Point(0, 0);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(397, 58);
             this.Label3.TabIndex = 613;
-            this.Label3.Text = "Inicio de Sesion";
+            this.Label3.Text = "Inicio de Sesión";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // datalistado_movimientos_validar
@@ -787,7 +808,7 @@
             this.LBLESTADOLicenciaLocal.Name = "LBLESTADOLicenciaLocal";
             this.LBLESTADOLicenciaLocal.Size = new System.Drawing.Size(136, 13);
             this.LBLESTADOLicenciaLocal.TabIndex = 621;
-            this.LBLESTADOLicenciaLocal.Text = "LBLESTADOLicenciaLocal";
+            this.LBLESTADOLicenciaLocal.Text = "";
             // 
             // datalistado_USUARIOS_REGISTRADOS
             // 
@@ -942,7 +963,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(11)))), ((int)(((byte)(14)))));
             this.ClientSize = new System.Drawing.Size(1189, 733);
             this.Controls.Add(this.PanelUsuarios);
             this.Controls.Add(this.panel5);
@@ -1028,6 +1049,7 @@
         private System.Windows.Forms.Label LBLESTADOLicenciaLocal;
         private System.Windows.Forms.DateTimePicker txtfecha_inicio_licencia;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblPie;
         private System.Windows.Forms.Panel panel1;
         internal System.Windows.Forms.Label Label8;
         private System.Windows.Forms.Panel panel10;

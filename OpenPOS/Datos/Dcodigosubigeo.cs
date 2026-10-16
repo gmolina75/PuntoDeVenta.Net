@@ -19,11 +19,42 @@ namespace OpenPOS.Datos
             try
             {
                 string rutatxt = Path.GetDirectoryName(Application.ExecutablePath) + @"\listaubigeos.txt";
+                if (!File.Exists(rutatxt))
+                {
+                    MessageBox.Show("No se encontró el archivo de códigos de ubigeo:\n" + rutatxt);
+                    return;
+                }
+
+                // Se lee el archivo desde la aplicación (cuenta del usuario que ejecuta
+                // openPOS) y se inserta con SqlBulkCopy. BULK INSERT de SQL Server corría bajo
+                // la cuenta del servicio SQL y fallaba con permisos al no poder leer la carpeta.
+                var dt = new DataTable();
+                dt.Columns.Add("Departamento", typeof(string));
+                dt.Columns.Add("Provincia", typeof(string));
+                dt.Columns.Add("Distrito", typeof(string));
+                dt.Columns.Add("Ubigeo", typeof(string));
+
+                using (var sr = new StreamReader(rutatxt, Encoding.Default))
+                {
+                    string linea;
+                    while ((linea = sr.ReadLine()) != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(linea)) continue;
+                        string[] p = linea.Split(';');
+                        if (p.Length < 4) continue;
+                        dt.Rows.Add(Recortar(p[0]), Recortar(p[1]), Recortar(p[2]), Recortar(p[3]));
+                    }
+                }
+
+                if (dt.Rows.Count == 0) return;
 
                 CONEXIONMAESTRA.abrir();
-                string sql = "BULK INSERT Codigosubigeos " + "FROM '" +rutatxt  + "' WITH (" +  "CODEPAGE = 'ACP',"  + "FIELDTERMINATOR = ';'," + "ROWTERMINATOR = '\n')";
-                var cmd = new SqlCommand(sql, CONEXIONMAESTRA.conectar);
-                cmd.ExecuteNonQuery();
+                using (var bc = new SqlBulkCopy(CONEXIONMAESTRA.conectar))
+                {
+                    bc.DestinationTableName = "Codigosubigeos";
+                    bc.BulkCopyTimeout = 0;
+                    bc.WriteToServer(dt);
+                }
             }
             catch (Exception ex)
             {
@@ -31,8 +62,15 @@ namespace OpenPOS.Datos
             }
             finally
             {
-               CONEXIONMAESTRA.cerrar();
+                CONEXIONMAESTRA.cerrar();
             }
+        }
+
+        private static string Recortar(string valor)
+        {
+            if (valor == null) return null;
+            valor = valor.Trim();
+            return valor.Length > 50 ? valor.Substring(0, 50) : valor;
         }
         public void mostrarCodigosubigeo(ref DataTable dt)
         {

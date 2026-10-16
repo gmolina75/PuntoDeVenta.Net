@@ -552,7 +552,7 @@
             this.LBLESTADOLicenciaLocal.Name = "LBLESTADOLicenciaLocal";
             this.LBLESTADOLicenciaLocal.Size = new System.Drawing.Size(62, 20);
             this.LBLESTADOLicenciaLocal.TabIndex = 615;
-            this.LBLESTADOLicenciaLocal.Text = "cadena";
+            this.LBLESTADOLicenciaLocal.Text = "";
             // 
             // datalistadoVentasEnEspera
             // 
@@ -791,7 +791,7 @@
             this.txtfecha_final_licencia_temporal.Name = "txtfecha_final_licencia_temporal";
             this.txtfecha_final_licencia_temporal.Size = new System.Drawing.Size(46, 20);
             this.txtfecha_final_licencia_temporal.TabIndex = 612;
-            this.txtfecha_final_licencia_temporal.Text = "serial";
+            this.txtfecha_final_licencia_temporal.Text = "";
             // 
             // Label64
             // 

@@ -33,12 +33,15 @@ namespace OpenPOS.Datos
                 cmd.Parameters.AddWithValue("@idventa", idventa);
                 cmd.Parameters.AddWithValue("@nombre", nombre);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
             }
             catch (Exception ex)
             {
 
                 OpenPOS.Logging.Logger.ShowError(ex);
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public static bool   editar_Conceptos(int idconcepto,string descripcion)
@@ -51,7 +54,6 @@ namespace OpenPOS.Datos
                 cmd.Parameters.AddWithValue("@Id_concepto", idconcepto);
                 cmd.Parameters.AddWithValue("@Descripcion", descripcion);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
                 return true;
             }
             catch (Exception ex)
@@ -59,6 +61,10 @@ namespace OpenPOS.Datos
 
                 MessageBox.Show(ex.Message);
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public static bool editar_dinero_caja_inicial(int idcaja, double  saldo)
@@ -71,7 +77,6 @@ namespace OpenPOS.Datos
                 cmd.Parameters.AddWithValue("@Id_caja", idcaja );
                 cmd.Parameters.AddWithValue("@saldo", saldo);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
                 return true;
             }
             catch (Exception ex)
@@ -79,6 +84,10 @@ namespace OpenPOS.Datos
 
                 MessageBox.Show(ex.Message);
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public bool editar_Proveedores(Lproveedores parametros)

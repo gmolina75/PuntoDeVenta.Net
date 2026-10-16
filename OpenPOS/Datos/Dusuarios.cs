@@ -303,62 +303,19 @@ namespace OpenPOS.Datos
         }
         public void licenciasExtras(ref string resultado, ref Panel panel)
         {
-            var funcion = new Dlicencias();
-            Mostrartipocaja();
-            if (tipocaja != "PRINCIPAL")
-            {
-                resultado = "NO APLICA";
-            }
-            else
-            {
-                if (funcion.ValidarLicencias(ref resultadoLic) == true)
-                {
-                    resultado = resultadoLic;
-                }
-                else
-                {
-                    var ctl = new Licencias();
-                    ctl.Dock = DockStyle.Fill;
-                    panel.Dock = DockStyle.Fill;
-                    panel.Controls.Add(ctl);
-                    panel.BringToFront();
-                }
-            }
-
+            resultado = "NO APLICA";
         }
         public void dibujarUsuarios(ref DataTable dt, ref string resultado, ref Panel panel)
         {
-            var funcion = new Dlicencias();
-            Mostrartipocaja();
-            if (tipocaja != "PRINCIPAL")
-            {
-                mostrarUsuarios(dt);
-            }
-            else
-            {
-                if (funcion.ValidarLicencias(ref resultadoLic) == true)
-                {
-                    resultado = resultadoLic;
-                    mostrarUsuarios(dt);
-                }
-                else
-                {
-                    var ctl = new Licencias();
-                    ctl.Dock = DockStyle.Fill;
-                    panel.Dock = DockStyle.Fill;
-                    panel.Controls.Add(ctl);
-                    panel.BringToFront();
-                }
-            }
-
-
+            resultado = "";
+            mostrarUsuarios(dt);
         }
         private void mostrarUsuarios(DataTable dt)
         {
             try
             {
                 CONEXIONMAESTRA.abrir();
-                SqlDataAdapter da = new SqlDataAdapter("Select * from USUARIO2 where Estado='ACTIVO' and Rol<>'Cliente'", CONEXIONMAESTRA.conectar);
+                SqlDataAdapter da = new SqlDataAdapter("Select * from Usuario where Estado='ACTIVO' and Rol<>'Cliente'", CONEXIONMAESTRA.conectar);
                 da.Fill(dt);
             }
             catch (Exception ex)
@@ -370,23 +327,96 @@ namespace OpenPOS.Datos
                 CONEXIONMAESTRA.cerrar();
             }
         }
+        /// <summary>
+        /// Valida el login recibido en claro. Si la contraseña almacenada aún usa el
+        /// cifrado reversible histórico, la valida y la migra automáticamente a hash.
+        /// </summary>
         public void validarUsuario(Lusuarios parametros, ref int id)
+        {
+            id = 0;
+            try
+            {
+                string almacenado = ObtenerPasswordAlmacenado(parametros.Login);
+                if (string.IsNullOrEmpty(almacenado)) return;
+
+                if (PasswordHasher.EsHash(almacenado))
+                {
+                    if (PasswordHasher.Verificar(parametros.Password, almacenado))
+                    {
+                        ObtenerIdUsuario(ref id, parametros.Login);
+                    }
+                }
+                else
+                {
+                    // Contraseña histórica cifrada reversible: puede haberse cifrado
+                    // con la clave heredada (antes de la migración) o con la actual.
+                    string legado = Bases.Encriptar(parametros.Password);
+                    bool coincide = string.Equals(legado, almacenado, StringComparison.Ordinal);
+                    if (!coincide && !KeyProvider.UsandoClaveHeredada)
+                    {
+                        string legadoHeredado = Bases.Encriptar(parametros.Password, KeyProvider.LegacyKey);
+                        coincide = string.Equals(legadoHeredado, almacenado, StringComparison.Ordinal);
+                    }
+                    if (coincide)
+                    {
+                        ObtenerIdUsuario(ref id, parametros.Login);
+                        if (id > 0)
+                        {
+                            ActualizarPassword(id, PasswordHasher.Hash(parametros.Password));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OpenPOS.Logging.Logger.ShowError(ex);
+                id = 0;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
+            }
+        }
+
+        private string ObtenerPasswordAlmacenado(string login)
         {
             try
             {
                 CONEXIONMAESTRA.abrir();
-                SqlCommand cmd = new SqlCommand("validar_usuario", CONEXIONMAESTRA.conectar);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@password", parametros.Password);
-                cmd.Parameters.AddWithValue("@login", parametros.Login);
-                id = Convert.ToInt32(cmd.ExecuteScalar());
-
-
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT Password FROM Usuario WHERE Login=@Login AND Estado='ACTIVO'",
+                    CONEXIONMAESTRA.conectar);
+                cmd.Parameters.AddWithValue("@Login", login);
+                object resultado = cmd.ExecuteScalar();
+                if (resultado == null || resultado == DBNull.Value) return null;
+                return Convert.ToString(resultado);
             }
             catch (Exception ex)
             {
-                id = 0;
+                OpenPOS.Logging.Logger.ShowError(ex);
+                return null;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
+            }
+        }
 
+        private void ActualizarPassword(int idUsuario, string nuevoHash)
+        {
+            try
+            {
+                CONEXIONMAESTRA.abrir();
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE Usuario SET Password=@Password WHERE idUsuario=@IdUsuario",
+                    CONEXIONMAESTRA.conectar);
+                cmd.Parameters.AddWithValue("@Password", nuevoHash);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                OpenPOS.Logging.Logger.ShowError(ex);
             }
             finally
             {

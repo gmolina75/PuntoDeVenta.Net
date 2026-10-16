@@ -28,12 +28,14 @@ namespace OpenPOS.Presentacion.Configuraciones
             var dt = new DataTable();
             var funcion = new Dticket();
             funcion.mostrar(ref dt);
-            txtMoneda_String.Text = dt.Rows[0][2].ToString();
-            txtAgradecimiento.Text = dt.Rows[0][3].ToString();
-            txtpagina_o_facebook.Text = dt.Rows[0][4].ToString();
-            txtanuncio.Text = dt.Rows[0][5].ToString();
-            txtAutorizacion_fiscal.Text = dt.Rows[0][6].ToString();
-            txttipo = dt.Rows[0][7].ToString();
+            // Si la tabla está vacía (sin ticket configurado) se dejan los campos en blanco.
+            if (dt == null || dt.Rows.Count == 0) return;
+            txtMoneda_String.Text = UtilesSeguros.Celda(dt, 0, 2);
+            txtAgradecimiento.Text = UtilesSeguros.Celda(dt, 0, 3);
+            txtpagina_o_facebook.Text = UtilesSeguros.Celda(dt, 0, 4);
+            txtanuncio.Text = UtilesSeguros.Celda(dt, 0, 5);
+            txtAutorizacion_fiscal.Text = UtilesSeguros.Celda(dt, 0, 6);
+            txttipo = UtilesSeguros.Celda(dt, 0, 7);
             if (txttipo == "Ticket No Fiscal")
             {
                 btnTicket.BackColor = Color.FromArgb(255, 204, 1);

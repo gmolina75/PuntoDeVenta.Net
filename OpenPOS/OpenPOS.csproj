@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -106,7 +106,12 @@
     <Compile Include="CONEXION\total_en_letras.cs" />
     <Compile Include="CONEXION\WinAutoComplete.cs" />
     <Compile Include="UI\Theme.cs" />
-    <Compile Include="UI\InstallConsole.cs" />
+    <Compile Include="UI\InstallConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Utilidades\UtilesSeguros.cs" />
+    <Compile Include="Repositorios\IVentasRepository.cs" />
+    <Compile Include="Repositorios\SqlVentasRepository.cs" />
     <Compile Include="Presentacion\Asistenteinstalacion\DatosInstalacionDialog.cs" />
     <Compile Include="Connected Services\servicioFacturacion2021\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -173,6 +178,7 @@
     <Compile Include="Sunat\Logica\Ltiponotacredito.cs" />
     <Compile Include="Sunat\Logica\LunidadM.cs" />
     <Compile Include="Logica\Lusuarios.cs" />
+    <Compile Include="Logica\PasswordHasher.cs" />
     <Compile Include="Sunat\Logica\Lventas.cs" />
     <Compile Include="Sunat\Logica\Lresumendiario.cs" />
     <Compile Include="Presentacion\Configuraciones\DisenoTicket.cs">

@@ -25,6 +25,10 @@ namespace OpenPOS.Datos
                 MessageBox.Show(ex.Message);
                 return false;
             }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
+            }
         }
         public bool editarSerializacion(Lserializacion parametros)
         {
@@ -47,6 +51,10 @@ namespace OpenPOS.Datos
                 MessageBox.Show(ex.Message);
                 return false;
             }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
+            }
         }
         public bool editarCompDefecto(Lserializacion parametros)
         {
@@ -63,6 +71,10 @@ namespace OpenPOS.Datos
             {
                 MessageBox.Show(ex.Message);
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public void mostrarSerializacion(ref DataTable dt)

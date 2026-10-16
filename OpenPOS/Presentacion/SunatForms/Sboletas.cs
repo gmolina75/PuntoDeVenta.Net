@@ -99,13 +99,15 @@ namespace OpenPOS.Presentacion.SunatForms
             var funcion = new Dempresa();
             var dt = new DataTable();
             funcion.mostrar_empresa(ref dt);
-            PassCertificado = dt.Rows[0][21].ToString();
-            UserSecundario = dt.Rows[0][22].ToString();
-            PassSecundario = dt.Rows[0][23].ToString();
-            Rucemisor = dt.Rows[0][14].ToString();
-            RutaCertificado = dt.Rows[0][20].ToString();
-            Servidor = dt.Rows[0][19].ToString();
-            Razonsocial = dt.Rows[0][15].ToString();
+            // Si no hay empresa registrada se dejan los datos SUNAT vacíos sin excepción.
+            if (dt == null || dt.Rows.Count == 0) return;
+            PassCertificado = UtilesSeguros.Celda(dt, 0, 21);
+            UserSecundario = UtilesSeguros.Celda(dt, 0, 22);
+            PassSecundario = UtilesSeguros.Celda(dt, 0, 23);
+            Rucemisor = UtilesSeguros.Celda(dt, 0, 14);
+            RutaCertificado = UtilesSeguros.Celda(dt, 0, 20);
+            Servidor = UtilesSeguros.Celda(dt, 0, 19);
+            Razonsocial = UtilesSeguros.Celda(dt, 0, 15);
         }
         private void Btnenviar_Click(object sender, EventArgs e)
         {
@@ -314,9 +316,10 @@ namespace OpenPOS.Presentacion.SunatForms
             var parametrosUbigeo = new Lcodigosubigeos();
             parametrosUbigeo.Ubigeo = ubigeo;
             funcion.ObtenerUbicaionXubigeo(ref dt, parametrosUbigeo);
-            parametros.Departamento = dt.Rows[0][0].ToString();
-            parametros.Provincia = dt.Rows[0][1].ToString();
-            parametros.Distrito = dt.Rows[0][2].ToString();
+            // Si el ubigeo no existe, se dejan vacíos en vez de explotar con Rows[0].
+            parametros.Departamento = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0) : "";
+            parametros.Provincia = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 1) : "";
+            parametros.Distrito = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
 
         }
         private void editarEstadoSunatVenta()

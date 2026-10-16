@@ -22,13 +22,16 @@ namespace OpenPOS.Datos
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Descripcion", descripcion);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
                 return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public static bool insertar_Gastos_varios(DateTime fecha,string Nro_documento,
@@ -47,13 +50,16 @@ namespace OpenPOS.Datos
                 cmd.Parameters.AddWithValue("@Id_caja", Id_caja);
                 cmd.Parameters.AddWithValue("@Id_concepto", Id_concepto);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
                 return true;        
             }
             catch (Exception ex)
             {
                 OpenPOS.Logging.Logger.ShowError(ex);
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
         public static bool insertar_Ingresos_varios(DateTime fecha, string Nro_documento,
@@ -72,13 +78,16 @@ namespace OpenPOS.Datos
                 cmd.Parameters.AddWithValue("@Id_caja", Id_caja);
              
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
                 return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
         }
 

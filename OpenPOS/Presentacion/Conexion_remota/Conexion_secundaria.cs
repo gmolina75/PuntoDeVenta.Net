@@ -44,7 +44,7 @@ namespace OpenPOS.Presentacion.Conexion_remota
             {
                 SqlConnection conexionManual = new SqlConnection(cadena_de_conexion);
                 conexionManual.Open();
-                SqlCommand da = new SqlCommand("select idUsuario from USUARIO2", conexionManual);
+                SqlCommand da = new SqlCommand("select idUsuario from Usuario", conexionManual);
                 id = Convert.ToInt32(da.ExecuteScalar());
                 indicador_de_conexion = "HAY CONEXION";
             }

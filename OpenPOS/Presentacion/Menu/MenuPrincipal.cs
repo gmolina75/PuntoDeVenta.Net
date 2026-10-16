@@ -1,4 +1,5 @@
 ﻿using OpenPOS.Datos;
+using OpenPOS.UI;
 using OpenPOS.Presentacion.CAJA;
 using OpenPOS.Presentacion.Configuraciones;
 using OpenPOS.Presentacion.Dashboard;
@@ -28,6 +29,11 @@ namespace OpenPOS.Presentacion.Menu
         string lic;
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
+            // Lenguaje "ébano + tarjetas": sidebar y cabecera como cromo oscuro,
+            // visor como lienzo para que las páginas se lean como tarjetas claras.
+            Theme.ChromeDark(panel1);
+            Theme.ChromeDark(panel13);
+            Theme.CanvasDark(panelVisor);
             DibujarBotones();
             validarLicencia();
         }

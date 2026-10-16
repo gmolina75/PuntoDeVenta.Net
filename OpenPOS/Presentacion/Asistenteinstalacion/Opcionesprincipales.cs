@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,7 +33,7 @@ namespace OpenPOS.Presentacion.Asistenteinstalacion
                 SqlConnection con = new SqlConnection();
                 con.ConnectionString = CONEXION.CONEXIONMAESTRA.conexion;
                 con.Open();
-                da = new SqlDataAdapter("select * from USUARIO2", con);
+                da = new SqlDataAdapter("select * from Usuario", con);
                 da.Fill(dt);
                 datalistado.DataSource = dt;
                 con.Close();

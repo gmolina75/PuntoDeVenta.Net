@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,7 +35,7 @@ namespace OpenPOS.Presentacion.AsistenteInstalacion
             var parametros = new Lusuarios();
             parametros.Nombre = txtnombre.Text;
             parametros.Login = TXTUSUARIO.Text;
-            parametros.Password = Bases.Encriptar(TXTCONTRASEÑA.Text);
+            parametros.Password = PasswordHasher.Hash(TXTCONTRASEÑA.Text);
             parametros.Rol = "Administrador";
             parametros.Correo = "-";
             System.IO.MemoryStream ms = new System.IO.MemoryStream();

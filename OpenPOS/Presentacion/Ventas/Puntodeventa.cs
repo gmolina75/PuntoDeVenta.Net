@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using OpenPOS.UI;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
@@ -64,6 +65,12 @@ namespace OpenPOS.Presentacion.Ventas
         }
         private void Puntodeventa_Load(object sender, EventArgs e)
         {
+            // Lenguaje "ébano + tarjetas": sectores de cobro/totales/cliente como
+            // tarjetas claras y la barra superior como cromo ébano.
+            Theme.ChromeDark(panel1);
+            Theme.Card(PanelTotales);
+            Theme.Card(panelCobro);
+            Theme.Card(panelClienteFactura);
             eliminarVentasimcompletas();
             ValidarTiposBusqueda();
             ObtenerComprobanteDefecto();
@@ -91,10 +98,12 @@ namespace OpenPOS.Presentacion.Ventas
             var funcion = new Dserializacion();
             var dt = new DataTable();
             funcion.ObtenerComprobanteDefecto(ref dt);
-            Comprobante = dt.Rows[0][0].ToString();
+            // Si no hay comprobante configurado aún, se usa una factura por defecto
+            // en lugar de caerse con Rows[0] sobre una tabla vacía.
+            Comprobante = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0, "FACTURA") : "FACTURA";
             lblComprobante.Text = Comprobante;
-            idcomprobante = Convert.ToInt32(dt.Rows[0][1]);
-            Envioinmediato = dt.Rows[0][2].ToString();
+            idcomprobante = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Entero(UtilesSeguros.Celda(dt, 0, 1), 1) : 1;
+            Envioinmediato = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
             dibujarComprobantes();
             validarPedidodeCliente();
         }
@@ -194,9 +203,11 @@ namespace OpenPOS.Presentacion.Ventas
             var funcion = new Dempresa();
             var dt = new DataTable();
             funcion.mostrarTipobusqueda(ref dt);
-            Tipobusqueda = dt.Rows[0][0].ToString();
-            conexionsunat = dt.Rows[0][1].ToString();
-            moneda = dt.Rows[0][2].ToString();
+            // Si la empresa no está configurada aún, se usan valores por defecto
+            // (búsqueda por teclado) en lugar de caerse con Rows[0].
+            Tipobusqueda = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0, "TECLADO") : "TECLADO";
+            conexionsunat = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 1) : "";
+            moneda = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
             if (Tipobusqueda == "TECLADO")
             {
                 btnlectora.BackColor = Color.WhiteSmoke;
@@ -536,7 +547,8 @@ namespace OpenPOS.Presentacion.Ventas
             var funcion = new Dcaja();
             var dt = new DataTable();
             funcion.MostrarImprTicket(ref dt);
-            Impresora = dt.Rows[0][0].ToString();
+            // Si no hay impresora configurada, se deja vacía sin lanzar excepción.
+            Impresora = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0) : "";
         }
         private void MostrarTicket()
         {
@@ -655,9 +667,10 @@ namespace OpenPOS.Presentacion.Ventas
             var parametrosUbigeo = new Lcodigosubigeos();
             parametrosUbigeo.Ubigeo = ubigeo;
             funcion.ObtenerUbicaionXubigeo(ref dt, parametrosUbigeo);
-            parametros.Departamento = dt.Rows[0][0].ToString();
-            parametros.Provincia = dt.Rows[0][1].ToString();
-            parametros.Distrito = dt.Rows[0][2].ToString();
+            // Si el ubigeo no existe, se dejan vacíos en vez de explotar con Rows[0].
+            parametros.Departamento = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 0) : "";
+            parametros.Provincia = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 1) : "";
+            parametros.Distrito = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
 
         }
         void confirmarVenta()

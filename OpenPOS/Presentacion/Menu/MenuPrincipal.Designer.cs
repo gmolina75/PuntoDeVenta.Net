@@ -117,7 +117,7 @@ namespace OpenPOS.Presentacion.Menu
             this.lblestadoLicencia.Name = "lblestadoLicencia";
             this.lblestadoLicencia.Size = new System.Drawing.Size(172, 46);
             this.lblestadoLicencia.TabIndex = 603;
-            this.lblestadoLicencia.Text = "Licencia de prueba activada hasta el 02 agosto 2023";
+            this.lblestadoLicencia.Text = "";
             this.lblestadoLicencia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox16

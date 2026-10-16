@@ -1,4 +1,4 @@
-﻿using OpenPOS.CONEXION;
+using OpenPOS.CONEXION;
 using OpenPOS.Logica;
 using System;
 using System.Collections.Generic;
@@ -87,7 +87,7 @@ namespace OpenPOS.Datos
             var funcion = new DiniciosSesion();
             var dt = new DataTable();
             funcion.mostrarInicioSesionTable(ref dt);
-            idusuario = Convert.ToInt32(dt.Rows[0][2]);
+            idusuario = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0][2]) : 0;
         }
         private void MostrarIdcaja()
         {
@@ -100,6 +100,11 @@ namespace OpenPOS.Datos
             {
                 MostrarIdcaja();
                 MostrarInicioSesion();
+                if (idcaja == 0 || idusuario == 0)
+                {
+                    MessageBox.Show("No se pudo identificar la caja o la sesion de usuario. Reinicie el programa e inicie sesion de nuevo.", "Apertura de caja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 CONEXIONMAESTRA.abrir();
                 SqlCommand cmd = new SqlCommand();
                 cmd = new SqlCommand("insertar_DETALLE_cierre_de_caja", CONEXIONMAESTRA.conectar);

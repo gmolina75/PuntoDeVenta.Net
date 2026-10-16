@@ -74,11 +74,20 @@ La clave **ya no está incrustada** en el código. `CONEXION/KeyProvider.cs` la 
 1. Variable de entorno **`OPENPOS_CRYPTO_KEY`** (recomendado en servidores/CI).
 2. appSetting **`OpenPOS:CryptoKey`** en `app.config`.
 3. Archivo **`openpos.key`** protegido con **DPAPI** junto al ejecutable.
-4. **Clave heredada** (compatibilidad con instalaciones existentes), registrando una advertencia en el
-   log. Genera una clave nueva con `KeyProvider.GenerarYGuardar()`.
+4. **Clave heredada** (último recurso, solo para descifrar instalaciones previas). Al arrancar, si el
+   archivo se descifra con esta clave, la aplicación **genera automáticamente una clave local nueva**
+   (`openpos.key` con DPAPI) y re-cifra `ConnectionString.xml`, quedando la clave heredada sin efecto.
+   Para forzar la generación manual usa `KeyProvider.GenerarYGuardar()`.
 
 > Si cambias la clave, las cadenas de conexión ya cifradas dejarán de descifrarse: vuelve a ejecutar el
 > asistente (borrando `ConnectionString.xml`) o re-cifra la cadena con la nueva clave.
+
+### Contraseñas de usuarios
+
+Las contraseñas de `Usuario` se guardan como **hash PBKDF2-HMAC-SHA256** (100.000 iteraciones, sal
+aleatoria por contraseña, formato `P1$…`, unidireccional). Las contraseñas antiguas cifradas de forma
+reversible se migran automáticamente al hash la primera vez que el usuario inicia sesión con éxito;
+no es necesario resetearlas.
 
 ## 5. Ejecutar
 

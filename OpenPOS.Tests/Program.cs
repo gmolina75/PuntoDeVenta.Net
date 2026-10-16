@@ -107,6 +107,55 @@ namespace OpenPOS.Tests
                 Assert(descifrado == original, "El descifrado no coincide con el original");
             });
 
+            Check("AES.Decrypt lanza excepción clara con clave incorrecta", () =>
+            {
+                var aes = new AES();
+                string cifrado = aes.Encrypt("dato", "clave-correcta", 256);
+                try
+                {
+                    aes.Decrypt(cifrado, "clave-incorrecta", 256);
+                    throw new InvalidOperationException("Decrypt no lanzó excepción con clave incorrecta");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Assert(ex.Message.Contains("descifrar"), "El mensaje no explica el fallo: " + ex.Message);
+                }
+            });
+
+            Check("AES.Decrypt lanza excepción con dato corrupto", () =>
+            {
+                var aes = new AES();
+                try
+                {
+                    aes.Decrypt("!!!no-es-base64!!!", KeyProvider.MasterKey, 256);
+                    throw new InvalidOperationException("Decrypt no lanzó excepción con Base64 inválido");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Assert(ex.Message.Contains("corrupto"), "El mensaje no explica el fallo: " + ex.Message);
+                }
+            });
+
+            Check("PasswordHasher genera hash verificable", () =>
+            {
+                string hash = OpenPOS.Logica.PasswordHasher.Hash("mi contraseña");
+                Assert(OpenPOS.Logica.PasswordHasher.EsHash(hash), "El formato no se reconoce como hash: " + hash);
+                Assert(OpenPOS.Logica.PasswordHasher.Verificar("mi contraseña", hash),
+                    "La contraseña correcta no fue aceptada");
+                Assert(!OpenPOS.Logica.PasswordHasher.Verificar("otra contraseña", hash),
+                    "Una contraseña incorrecta fue aceptada");
+            });
+
+            Check("PasswordHasher usa sal aleatoria y cabe en varchar(50)", () =>
+            {
+                string h1 = OpenPOS.Logica.PasswordHasher.Hash("repetida");
+                string h2 = OpenPOS.Logica.PasswordHasher.Hash("repetida");
+                Assert(h1 != h2, "Dos hash de la misma contraseña son iguales (sal fija)");
+                Assert(h1.Length <= 50, "El hash no cabe en Password varchar(50): " + h1.Length);
+                Assert(!OpenPOS.Logica.PasswordHasher.Verificar("x", "texto-plano-viejo"),
+                    "Verificar aceptó un valor que no es hash");
+            });
+
             Check("Theme aplica la marca sin romper skins ni fuentes monoespaciadas", () =>
             {
                 using (var f = new Form())

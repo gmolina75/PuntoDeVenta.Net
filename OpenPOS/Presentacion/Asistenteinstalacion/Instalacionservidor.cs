@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -451,10 +451,11 @@ namespace OpenPOS.Presentacion.Asistenteinstalacion
 
             // Primero se crea el LOGIN/usuario de SQL Server y luego el esquema,
             // que referencia ese login mediante el marcador __LOGIN__ (el esquema
-            // traía un usuario fijo "pruebas2020" que ya no existe).
+            // traía un usuario fijo "pruebas2020" que ya no existe). El marcador
+            // __PASSWORD__ se sustituye por la contraseña elegida en el asistente.
             string usuario = _plantillaUsuarioDb
                 .Replace("openPOS", login)
-                .Replace("softwarereal", ctx.Password);
+                .Replace("__PASSWORD__", ctx.Password.Replace("'", "''"));
             string esquema = _plantillaProcedimientos.Replace("__LOGIN__", login);
 
             string combinado = usuario + Environment.NewLine + esquema;

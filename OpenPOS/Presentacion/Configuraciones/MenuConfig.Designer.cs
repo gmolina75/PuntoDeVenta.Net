@@ -1,4 +1,4 @@
-﻿
+
 namespace OpenPOS.Presentacion.Configuraciones
 {
     partial class MenuConfig
@@ -73,7 +73,6 @@ namespace OpenPOS.Presentacion.Configuraciones
             this.Panel37 = new System.Windows.Forms.Panel();
             this.btnserializacion = new System.Windows.Forms.Button();
             this.Label29 = new System.Windows.Forms.Label();
-            this.LBLEstado_correo = new System.Windows.Forms.Label();
             this.Panel9 = new System.Windows.Forms.Panel();
             this.btnproductos = new System.Windows.Forms.Button();
             this.Label3 = new System.Windows.Forms.Label();
@@ -585,7 +584,6 @@ namespace OpenPOS.Presentacion.Configuraciones
             this.Panel37.BackColor = System.Drawing.Color.Transparent;
             this.Panel37.Controls.Add(this.btnserializacion);
             this.Panel37.Controls.Add(this.Label29);
-            this.Panel37.Controls.Add(this.LBLEstado_correo);
             this.Panel37.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Panel37.Location = new System.Drawing.Point(264, 3);
             this.Panel37.Name = "Panel37";
@@ -617,16 +615,7 @@ namespace OpenPOS.Presentacion.Configuraciones
             this.Label29.TabIndex = 3;
             this.Label29.Text = "Serializacion";
             this.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LBLEstado_correo
-            // 
-            this.LBLEstado_correo.AutoSize = true;
-            this.LBLEstado_correo.Location = new System.Drawing.Point(34, 19);
-            this.LBLEstado_correo.Name = "LBLEstado_correo";
-            this.LBLEstado_correo.Size = new System.Drawing.Size(39, 13);
-            this.LBLEstado_correo.TabIndex = 596;
-            this.LBLEstado_correo.Text = "Label3";
-            // 
+            //
             // Panel9
             // 
             this.Panel9.BackColor = System.Drawing.Color.Transparent;
@@ -837,7 +826,6 @@ namespace OpenPOS.Presentacion.Configuraciones
         internal System.Windows.Forms.Panel Panel37;
         internal System.Windows.Forms.Button btnserializacion;
         internal System.Windows.Forms.Label Label29;
-        internal System.Windows.Forms.Label LBLEstado_correo;
         internal System.Windows.Forms.Panel Panel9;
         internal System.Windows.Forms.Button btnproductos;
         internal System.Windows.Forms.Label Label3;

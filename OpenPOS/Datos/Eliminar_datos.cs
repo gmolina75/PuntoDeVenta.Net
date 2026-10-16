@@ -22,11 +22,14 @@ namespace OpenPOS.Datos
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@idingreso", idingreso);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
             }
             catch (Exception ex)
             {
                 OpenPOS.Logging.Logger.ShowError(ex);
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
 
         }
@@ -39,11 +42,14 @@ namespace OpenPOS.Datos
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@idgasto", idgasto);
                 cmd.ExecuteNonQuery();
-                CONEXIONMAESTRA.cerrar();
             }
             catch (Exception ex)
             {
                 OpenPOS.Logging.Logger.ShowError(ex);
+            }
+            finally
+            {
+                CONEXIONMAESTRA.cerrar();
             }
 
         }
