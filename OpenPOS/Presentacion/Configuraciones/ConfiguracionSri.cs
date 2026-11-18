@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using OpenPOS.UI;
 
 namespace OpenPOS.Presentacion.Configuraciones
 {
@@ -28,11 +29,13 @@ namespace OpenPOS.Presentacion.Configuraciones
         {
             if (!System.IO.File.Exists(txtCertificado.Text))
             {
-                MessageBox.Show("Seleccione un certificado válido");
+                DialogService.Show("Seleccione un certificado válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            // Guardar configuración en app.config o base de datos
-            MessageBox.Show("Configuración guardada");
+            Properties.Settings.Default.SriCertificadoPath = txtCertificado.Text;
+            Properties.Settings.Default.SriContrasena = txtContrasena.Text;
+            Properties.Settings.Default.Save();
+            DialogService.Show("Configuración SRI guardada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

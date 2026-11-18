@@ -249,6 +249,7 @@ namespace OpenPOS.Tests
                 factura.Detalles.Add(new OpenPOS.Sunat.Ecuador.DetalleFactura
                 {
                     Codigo = "PROD001",
+                    CodigoAuxiliar = "",
                     Descripcion = "Producto de prueba",
                     Cantidad = 1,
                     PrecioUnitario = 100.00m,
@@ -261,6 +262,129 @@ namespace OpenPOS.Tests
                 Assert(xml.Contains("0999999999001"), "El XML debe contener el RUC");
                 Assert(xml.Contains("<codDoc>01"), "El XML debe contener codDoc 01 (factura)");
                 Assert(xml.Contains("http://www.sri.gob.ec/factura/"), "El XML debe tener el namespace del SRI");
+            });
+
+            Check("Guia de Remision SRI 2.0.0 genera XML valido", () =>
+            {
+                var guia = new OpenPOS.Sunat.Ecuador.GuiaRemision
+                {
+                    Ruc = "0999999999001",
+                    PuntoEmision = "001",
+                    Secuencial = 12346,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = "CLIENTE DE PRUEBA SA",
+                    IdentificacionComprador = "0999999999001",
+                    DireccionDestino = "Av. Principal 123, Quito",
+                    MotivoTraslado = "Venta de mercaderias"
+                };
+                guia.Detalles.Add(new OpenPOS.Sunat.Ecuador.DetalleGuia
+                {
+                    Codigo = "PROD001",
+                    Descripcion = "Producto de prueba",
+                    Cantidad = 1,
+                    UnidadMedida = "UN"
+                });
+
+                string xml = OpenPOS.Sunat.Ecuador.GeneradorXml.GenerarGuiaRemision(guia);
+                Assert(xml.Contains(@"version=""2.0.0"""), "El XML debe tener version 2.0.0");
+                Assert(xml.Contains("<codDoc>06"), "El XML debe contener codDoc 06 (guia)");
+                Assert(xml.Contains("http://www.sri.gob.ec/factura/"), "El XML debe tener el namespace del SRI");
+            });
+
+            Check("Retencion SRI 2.0.0 genera XML valido", () =>
+            {
+                var retencion = new OpenPOS.Sunat.Ecuador.Retencion
+                {
+                    Ruc = "0999999999001",
+                    PuntoEmision = "001",
+                    Secuencial = 12347,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = "CLIENTE DE PRUEBA SA",
+                    IdentificacionComprador = "0999999999001"
+                };
+                retencion.Detalles.Add(new OpenPOS.Sunat.Ecuador.DetalleRetencion
+                {
+                    Codigo = "001",
+                    Descripcion = "Retencion de IESS",
+                    Porcentaje = 12.00m,
+                    BaseImponible = 100.00m,
+                    ValorRetenido = 12.00m
+                });
+
+                string xml = OpenPOS.Sunat.Ecuador.GeneradorXml.GenerarRetencion(retencion);
+                Assert(xml.Contains(@"version=""2.0.0"""), "El XML debe tener version 2.0.0");
+                Assert(xml.Contains("<codDoc>07"), "El XML debe contener codDoc 07 (retencion)");
+                Assert(xml.Contains("http://www.sri.gob.ec/factura/"), "El XML debe tener el namespace del SRI");
+            });
+
+            Check("Nota Credito SRI 2.0.0 genera XML valido", () =>
+            {
+                var nota = new OpenPOS.Sunat.Ecuador.NotaCredito
+                {
+                    Ruc = "0999999999001",
+                    PuntoEmision = "001",
+                    Secuencial = 12348,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = "CLIENTE DE PRUEBA SA",
+                    IdentificacionComprador = "0999999999001"
+                };
+                nota.Detalles.Add(new OpenPOS.Sunat.Ecuador.DetalleNota
+                {
+                    Codigo = "PROD001",
+                    CodigoAuxiliar = "",
+                    Descripcion = "Producto de prueba",
+                    Cantidad = 1,
+                    PrecioUnitario = 100.00m,
+                    PrecioTotal = 100.00m,
+                    Descuento = 0
+                });
+
+                string xml = OpenPOS.Sunat.Ecuador.GeneradorXml.GenerarNotaCredito(nota);
+                Assert(xml.Contains(@"version=""2.0.0"""), "El XML debe tener version 2.0.0");
+                Assert(xml.Contains("<codDoc>04"), "El XML debe contener codDoc 04 (nota credito)");
+                Assert(xml.Contains("http://www.sri.gob.ec/factura/"), "El XML debe tener el namespace del SRI");
+            });
+
+            Check("Nota Debito SRI 2.0.0 genera XML valido", () =>
+            {
+                var nota = new OpenPOS.Sunat.Ecuador.NotaDebito
+                {
+                    Ruc = "0999999999001",
+                    PuntoEmision = "001",
+                    Secuencial = 12349,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = "CLIENTE DE PRUEBA SA",
+                    IdentificacionComprador = "0999999999001"
+                };
+                nota.Detalles.Add(new OpenPOS.Sunat.Ecuador.DetalleNota
+                {
+                    Codigo = "PROD001",
+                    CodigoAuxiliar = "",
+                    Descripcion = "Producto de prueba",
+                    Cantidad = 1,
+                    PrecioUnitario = 100.00m,
+                    PrecioTotal = 100.00m,
+                    Descuento = 0
+                });
+
+                string xml = OpenPOS.Sunat.Ecuador.GeneradorXml.GenerarNotaDebito(nota);
+                Assert(xml.Contains(@"version=""2.0.0"""), "El XML debe tener version 2.0.0");
+                Assert(xml.Contains("<codDoc>05"), "El XML debe contener codDoc 05 (nota debito)");
+                Assert(xml.Contains("http://www.sri.gob.ec/factura/"), "El XML debe tener el namespace del SRI");
+            });
+
+            Check("ButtonRole.Warning se aplica correctamente", () =>
+            {
+                var btn = new Button { Text = "Advertencia Important" };
+                Theme.ButtonStyler.Apply(btn, Theme.ButtonRole.Warning);
+                Assert(btn.BackColor == Color.FromArgb(255, 193, 7), "Boton Warning debe tener color naranja");
+                Assert(btn.ForeColor == Color.Black, "Boton Warning debe tener texto negro");
+            });
+
+            Check("Theme.Primary y Accent son consistentes", () =>
+            {
+                Assert(Theme.Primary.ToArgb() == Color.FromArgb(27, 46, 140).ToArgb(), "Primary debe ser #1B2E8C");
+                Assert(Theme.Accent.ToArgb() == Color.FromArgb(8, 182, 201).ToArgb(), "Accent debe ser #08B6C9");
             });
 
             Console.WriteLine();

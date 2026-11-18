@@ -9,6 +9,7 @@ using OpenPOS.Presentacion.Ingresos_varios;
 using OpenPOS.Presentacion.Menu;
 using OpenPOS.Presentacion.REPORTES.Impresion_de_comprobantes;
 using OpenPOS.Sunat;
+using OpenPOS.Sunat.Ecuador;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -87,6 +88,8 @@ namespace OpenPOS.Presentacion.Ventas
             foreach (Control c in this.Controls) AplicarBotones(c);
             AplicarBotones(this);
             AgregarBotonFacturaElectronica();
+            AgregarBotonGuiaRemision();
+            AgregarBotonRetencion();
             eliminarVentasimcompletas();
             ValidarTiposBusqueda();
             ObtenerComprobanteDefecto();
@@ -128,7 +131,7 @@ namespace OpenPOS.Presentacion.Ventas
                 {
                     Ruc = "",
                     PuntoEmision = "001",
-                    Secuencial = idventa,
+                    Secuencial = Properties.Settings.Default.UltimaFacturaSecuencial + 1,
                     FechaEmision = DateTime.Now,
                     RazonSocialComprador = lblCliente.Text,
                     IdentificacionComprador = "",
@@ -142,6 +145,7 @@ namespace OpenPOS.Presentacion.Ventas
                     factura.Detalles.Add(new Sunat.Ecuador.DetalleFactura
                     {
                         Codigo = fila[codigoCol].ToString(),
+                        CodigoAuxiliar = "",
                         Descripcion = fila[descCol].ToString(),
                         Cantidad = Convert.ToDecimal(fila[cantCol]),
                         PrecioUnitario = Convert.ToDecimal(fila[precioCol]),
@@ -153,7 +157,27 @@ namespace OpenPOS.Presentacion.Ventas
                 string xml = Sunat.Ecuador.GeneradorXml.GenerarFactura(factura);
                 string ruta = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"factura_{idventa}.xml");
                 System.IO.File.WriteAllText(ruta, xml);
-                DialogService.Show($"Factura electrónica generada: {ruta}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Properties.Settings.Default.UltimaFacturaSecuencial = factura.Secuencial;
+                Properties.Settings.Default.Save();
+
+                var sriConfig = ObtenerConfiguracionSri();
+                if (sriConfig.CertificadoPath != null && sriConfig.Contrasena != null)
+                {
+                    var result = await AutorizarFactura(xml, sriConfig);
+                    if (result.Autorizado)
+                    {
+                        System.IO.File.WriteAllText(ruta.Replace(".xml", "_autorizada.xml"), result.XmlRespuesta);
+                        DialogService.Show($"Factura electrónica AUTORIZADA: {result.ClaveAcceso}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        DialogService.Show($"Autorización fallida: {result.Mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    DialogService.Show($"Factura electrónica generada (sin autorizar). Configure certificado SRI primero.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -168,6 +192,187 @@ namespace OpenPOS.Presentacion.Ventas
                 if (dt.Columns.Contains(col)) return col;
             }
             return dt.Columns[0].ColumnName;
+        }
+
+        // Métodos SRI 2.0.0 para autorización automática
+        private SRIConfiguracion ObtenerConfiguracionSri()
+        {
+            return new SRIConfiguracion
+            {
+                CertificadoPath = Properties.Settings.Default.SriCertificadoPath,
+                Contrasena = Properties.Settings.Default.SriContrasena
+            };
+        }
+
+        private async Task<AutorizacionResult> AutorizarFactura(string xml, SRIConfiguracion config)
+        {
+            return await AutorizadorSri.AutorizarAsync(xml, config.CertificadoPath, config.Contrasena);
+        }
+
+        private class SRIConfiguracion
+        {
+            public string CertificadoPath { get; set; }
+            public string Contrasena { get; set; }
+        }
+
+        // Botón Guía de Remisión integrado
+        private void AgregarBotonGuiaRemision()
+        {
+            var btn = new Button();
+            btn.Text = "Guía Remisión (SRI)";
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.UseVisualStyleBackColor = false;
+            btn.Size = new Size(160, 34);
+            btn.Location = new Point(190, 20);
+            Theme.ButtonStyler.Apply(btn, Theme.ButtonRole.Secondary);
+            btn.Click += BtnGuiaRemision_Click;
+            PanelOperaciones.Controls.Add(btn);
+        }
+
+        private async void BtnGuiaRemision_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dt = dgDetalleventa.DataSource as DataTable;
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    DialogService.Show("No hay detalle de venta para generar guía", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string codigoCol = ObtenerNombreColumna(dt, "Codigo", "codigo", "CodigoProducto", "idproducto");
+                string descCol = ObtenerNombreColumna(dt, "Descripcion", "descripcion", "Detalle", "producto");
+                string cantCol = ObtenerNombreColumna(dt, "Cantidad", "cantidad", "cant");
+                string unidadCol = ObtenerNombreColumna(dt, "Unidad", "unidad", "unidadmedida", "um");
+
+                var guia = new GuiaRemision
+                {
+                    Ruc = "",
+                    PuntoEmision = "001",
+                    Secuencial = Properties.Settings.Default.UltimaFacturaSecuencial + 1,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = lblCliente.Text,
+                    IdentificacionComprador = "",
+                    DireccionDestino = "",
+                    MotivoTraslado = ""
+                };
+
+                foreach (DataRow fila in dt.Rows)
+                {
+                    guia.Detalles.Add(new DetalleGuia
+                    {
+                        Codigo = fila[codigoCol].ToString(),
+                        Descripcion = fila[descCol].ToString(),
+                        Cantidad = Convert.ToDecimal(fila[cantCol]),
+                        UnidadMedida = dt.Columns.Contains(unidadCol) ? fila[unidadCol].ToString() : "UN"
+                    });
+                }
+
+                string xml = GeneradorXml.GenerarGuiaRemision(guia);
+                string ruta = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"guia_{idventa}.xml");
+                System.IO.File.WriteAllText(ruta, xml);
+
+                var sriConfig = ObtenerConfiguracionSri();
+                if (sriConfig.CertificadoPath != null && sriConfig.Contrasena != null)
+                {
+                    var result = await AutorizarFactura(xml, sriConfig);
+                    if (result.Autorizado)
+                    {
+                        System.IO.File.WriteAllText(ruta.Replace(".xml", "_autorizada.xml"), result.XmlRespuesta);
+                        DialogService.Show($"Guía de Remisión AUTORIZADA: {result.ClaveAcceso}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        DialogService.Show($"Autorización fallida: {result.Mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    DialogService.Show($"Guía de Remisión generada (sin autorizar). Configure certificado SRI primero.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                DialogService.Show($"Error al generar guía de remisión: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Botón Retención integrado
+        private void AgregarBotonRetencion()
+        {
+            var btn = new Button();
+            btn.Text = "Retención (SRI)";
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.UseVisualStyleBackColor = false;
+            btn.Size = new Size(160, 34);
+            btn.Location = new Point(360, 20);
+            Theme.ButtonStyler.Apply(btn, Theme.ButtonRole.Warning);
+            btn.Click += BtnRetencion_Click;
+            PanelOperaciones.Controls.Add(btn);
+        }
+
+        private async void BtnRetencion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dt = dgDetalleventa.DataSource as DataTable;
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    DialogService.Show("No hay detalle de venta para generar retención", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string codigoCol = ObtenerNombreColumna(dt, "Codigo", "codigo", "CodigoProducto", "idproducto");
+                string descCol = ObtenerNombreColumna(dt, "Descripcion", "descripcion", "Detalle", "producto");
+                string totalCol = ObtenerNombreColumna(dt, "Importe", "importe", "total", "precioTotal", "monto");
+
+                var retencion = new Retencion
+                {
+                    Ruc = "",
+                    PuntoEmision = "001",
+                    Secuencial = Properties.Settings.Default.UltimaFacturaSecuencial + 1,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = lblCliente.Text,
+                    IdentificacionComprador = ""
+                };
+
+                decimal totalRetener = total * 0.12m;
+                retencion.Detalles.Add(new DetalleRetencion
+                {
+                    Codigo = "001",
+                    Descripcion = "Retención de IESS",
+                    Porcentaje = 12.00m,
+                    BaseImponible = total,
+                    ValorRetenido = totalRetener
+                });
+
+                string xml = GeneradorXml.GenerarRetencion(retencion);
+                string ruta = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"retencion_{idventa}.xml");
+                System.IO.File.WriteAllText(ruta, xml);
+
+                var sriConfig = ObtenerConfiguracionSri();
+                if (sriConfig.CertificadoPath != null && sriConfig.Contrasena != null)
+                {
+                    var result = await AutorizarFactura(xml, sriConfig);
+                    if (result.Autorizado)
+                    {
+                        System.IO.File.WriteAllText(ruta.Replace(".xml", "_autorizada.xml"), result.XmlRespuesta);
+                        DialogService.Show($"Retención AUTORIZADA: {result.ClaveAcceso}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        DialogService.Show($"Autorización fallida: {result.Mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    DialogService.Show($"Retención generada (sin autorizar). Configure certificado SRI primero.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                DialogService.Show($"Error al generar retención: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AplicarBotones(Control root)

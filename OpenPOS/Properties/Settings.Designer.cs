@@ -22,5 +22,51 @@ namespace OpenPOS.Properties {
                 return defaultInstance;
             }
         }
+
+        // SRI Settings
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public string SriCertificadoPath {
+            get {
+                return ((string)(this["SriCertificadoPath"]));
+            }
+            set {
+                this["SriCertificadoPath"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public string SriContrasena {
+            get {
+                return ((string)(this["SriContrasena"]));
+            }
+            set {
+                this["SriContrasena"] = value;
+            }
+        }
+
+        // User Settings
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool DarkModeEnabled {
+            get {
+                return ((bool)(this["DarkModeEnabled"]));
+            }
+            set {
+                this["DarkModeEnabled"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int UltimaFacturaSecuencial {
+            get {
+                return ((int)(this["UltimaFacturaSecuencial"]));
+            }
+            set {
+                this["UltimaFacturaSecuencial"] = value;
+            }
+        }
     }
 }

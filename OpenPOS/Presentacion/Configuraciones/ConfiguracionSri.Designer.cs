@@ -71,20 +71,38 @@ namespace OpenPOS.Presentacion.Configuraciones
             this.btnCargarCertificado.Text = "Cargar...";
             this.btnCargarCertificado.Click += new System.EventHandler(this.btnCargarCertificado_Click);
             // 
+            // lblContrasena
+            // 
+            this.lblContrasena = new System.Windows.Forms.Label();
+            this.lblContrasena.AutoSize = true;
+            this.lblContrasena.Location = new System.Drawing.Point(20, 210);
+            this.lblContrasena.Name = "lblContrasena";
+            this.lblContrasena.Size = new System.Drawing.Size(95, 20);
+            this.lblContrasena.TabIndex = 4;
+            this.lblContrasena.Text = "Contraseña:";
+            // 
+            // txtContrasena
+            // 
+            this.txtContrasena.Location = new System.Drawing.Point(20, 235);
+            this.txtContrasena.Name = "txtContrasena";
+            this.txtContrasena.PasswordChar = '*';
+            this.txtContrasena.Size = new System.Drawing.Size(350, 26);
+            this.txtContrasena.TabIndex = 5;
+            // 
             // lblCertInfo
             // 
             this.lblCertInfo.AutoSize = true;
             this.lblCertInfo.Location = new System.Drawing.Point(20, 170);
             this.lblCertInfo.Name = "lblCertInfo";
             this.lblCertInfo.Size = new System.Drawing.Size(0, 20);
-            this.lblCertInfo.TabIndex = 4;
+            this.lblCertInfo.TabIndex = 6;
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(20, 200);
+            this.btnGuardar.Location = new System.Drawing.Point(20, 280);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(120, 30);
-            this.btnGuardar.TabIndex = 5;
+            this.btnGuardar.TabIndex = 7;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
@@ -94,13 +112,15 @@ namespace OpenPOS.Presentacion.Configuraciones
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.lblCertInfo);
+            this.Controls.Add(this.txtContrasena);
+            this.Controls.Add(this.lblContrasena);
             this.Controls.Add(this.btnCargarCertificado);
             this.Controls.Add(this.txtCertificado);
             this.Controls.Add(this.lblCertificado);
             this.Controls.Add(this.lblTitulo);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "ConfiguracionSri";
-            this.Size = new System.Drawing.Size(500, 300);
+            this.Size = new System.Drawing.Size(500, 320);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -110,6 +130,8 @@ namespace OpenPOS.Presentacion.Configuraciones
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Label lblCertificado;
         private System.Windows.Forms.TextBox txtCertificado;
+        private System.Windows.Forms.Label lblContrasena;
+        private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.Button btnCargarCertificado;
         private System.Windows.Forms.Label lblCertInfo;
         private System.Windows.Forms.Button btnGuardar;

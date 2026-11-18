@@ -3,5 +3,26 @@
   <Profiles>
     <Profile Name="(Default)" />
   </Profiles>
-  <Settings />
+  <Settings>
+    <Setting name="SriCertificadoPath" type="System.String, mscorlib" scope="User">
+      <ValueProfile xml:space="preserve">
+        <Value />
+      </ValueProfile>
+    </Setting>
+    <Setting name="SriContrasena" type="System.String, mscorlib" scope="User">
+      <ValueProfile xml:space="preserve">
+        <Value />
+      </ValueProfile>
+    </Setting>
+    <Setting name="DarkModeEnabled" type="System.Boolean, mscorlib" scope="User">
+      <ValueProfile xml:space="preserve">
+        <Value>False</Value>
+      </ValueProfile>
+    </Setting>
+    <Setting name="UltimaFacturaSecuencial" type="System.Int32, mscorlib" scope="User">
+      <ValueProfile xml:space="preserve">
+        <Value>0</Value>
+      </ValueProfile>
+    </Setting>
+  </Settings>
 </SettingsFile>

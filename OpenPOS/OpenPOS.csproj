@@ -181,6 +181,7 @@
     <Compile Include="Sunat\Ecuador\GeneradorXml.cs" />
     <Compile Include="Sunat\Ecuador\AutorizadorSri.cs" />
     <Compile Include="Sunat\Ecuador\Modelos\FacturaElectronica.cs" />
+    <Compile Include="Sunat\Ecuador\Modelos\DetalleNota.cs" />
     <Compile Include="Sunat\Ecuador\Modelos\NotaCredito.cs" />
     <Compile Include="Sunat\Ecuador\Modelos\NotaDebito.cs" />
     <Compile Include="Sunat\Ecuador\Modelos\GuiaRemision.cs" />

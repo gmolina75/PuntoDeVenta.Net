@@ -379,7 +379,7 @@ namespace OpenPOS.UI
             }
         }
 
-    public enum ButtonRole { Auto, Primary, Secondary, Ghost, Danger }
+    public enum ButtonRole { Auto, Primary, Secondary, Ghost, Danger, Warning }
 
         internal static ButtonRole InferRole(Button b)
         {
@@ -427,6 +427,12 @@ namespace OpenPOS.UI
                     b.ForeColor = Color.White;
                     b.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 80, 80);
                     b.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 45, 45);
+                    break;
+                case ButtonRole.Warning:
+                    b.BackColor = Color.FromArgb(255, 193, 7);
+                    b.ForeColor = Color.Black;
+                    b.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 210, 20);
+                    b.FlatAppearance.MouseDownBackColor = Color.FromArgb(245, 170, 0);
                     break;
                 default:
                     b.BackColor = Primary;
