@@ -33,7 +33,11 @@ namespace OpenPOS.Presentacion.Menu
             // visor como lienzo para que las páginas se lean como tarjetas claras.
             Theme.ChromeDark(panel1);
             Theme.ChromeDark(panel13);
+            Theme.CanvasDark(this);
             Theme.CanvasDark(panelVisor);
+            panelVisor.BackColor = Theme.ShellCanvas;
+            panelbotones.Padding = new Padding(8);
+            panelbotones.AutoScroll = true;
             DibujarBotones();
             validarLicencia();
         }
@@ -76,10 +80,11 @@ namespace OpenPOS.Presentacion.Menu
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderSize = 0;
                 btn.FlatAppearance.MouseDownBackColor = Color.Transparent;
-                btn.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                btn.FlatAppearance.MouseOverBackColor = Theme.NavButtonHover;
                 btn.Size = new Size(168, 69);
+                btn.Margin = new Padding(4);
                 btn.ForeColor = Color.White;
-                btn.Font = new Font("Consolas", 13, FontStyle.Bold);
+                btn.Font = new Font("Segoe UI", 13, FontStyle.Bold);
                 panelbotones.Controls.Add(btn);
                 btn.Click += Btn_Click; ;
 

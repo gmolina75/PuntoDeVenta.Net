@@ -65,16 +65,117 @@ namespace OpenPOS.Presentacion.Ventas
         }
         private void Puntodeventa_Load(object sender, EventArgs e)
         {
-            // Lenguaje "ébano + tarjetas": sectores de cobro/totales/cliente como
-            // tarjetas claras y la barra superior como cromo ébano.
             Theme.ChromeDark(panel1);
             Theme.Card(PanelTotales);
             Theme.Card(panelCobro);
             Theme.Card(panelClienteFactura);
+            Theme.CanvasDark(this);
+            Theme.Card(panelBienvenida);
+            Theme.Apply(dgDetalleventa);
+            Theme.Apply(dgProductos);
+            Theme.Apply(txtbuscar);
+            Theme.Apply(txtcantidad);
+            Theme.Apply(txtefectivo);
+            Theme.Apply(txttarjeta);
+            Theme.Apply(txtcredito);
+            Theme.Apply(txtreferencia);
+            Theme.Apply(lblTotalref);
+            Theme.Apply(lbltotal);
+            Theme.Apply(lblvuelto);
+            Theme.Apply(lblCliente);
+            Theme.Apply(lblComprobante);
+            foreach (Control c in this.Controls) AplicarBotones(c);
+            AplicarBotones(this);
+            AgregarBotonFacturaElectronica();
             eliminarVentasimcompletas();
             ValidarTiposBusqueda();
             ObtenerComprobanteDefecto();
             ValidarAperturacaja();
+        }
+
+        private void AgregarBotonFacturaElectronica()
+        {
+            var btnFe = new Button();
+            btnFe.Text = "Factura Electrónica (SRI)";
+            btnFe.FlatStyle = FlatStyle.Flat;
+            btnFe.UseVisualStyleBackColor = false;
+            btnFe.Size = new Size(160, 34);
+            btnFe.Location = new Point(20, 20);
+            Theme.ButtonStyler.Apply(btnFe, Theme.ButtonRole.Primary);
+            btnFe.Click += BtnFacturaElectronica_Click;
+            PanelOperaciones.Controls.Add(btnFe);
+            btnFe.BringToFront();
+        }
+
+        private async void BtnFacturaElectronica_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dt = dgDetalleventa.DataSource as DataTable;
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    DialogService.Show("No hay detalle de venta", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string codigoCol = ObtenerNombreColumna(dt, "Codigo", "codigo", "CodigoProducto", "idproducto");
+                string descCol = ObtenerNombreColumna(dt, "Descripcion", "descripcion", "Detalle", "producto");
+                string cantCol = ObtenerNombreColumna(dt, "Cantidad", "cantidad", "cant");
+                string precioCol = ObtenerNombreColumna(dt, "PrecioUnitario", "precioUnitario", "precio_unitario", "precio");
+                string totalCol = ObtenerNombreColumna(dt, "Importe", "importe", "total", "precioTotal", "monto");
+
+                var factura = new Sunat.Ecuador.FacturaElectronica
+                {
+                    Ruc = "",
+                    PuntoEmision = "001",
+                    Secuencial = idventa,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = lblCliente.Text,
+                    IdentificacionComprador = "",
+                    DireccionEstablecimiento = "",
+                    TotalSinImpuestos = total,
+                    Total = total
+                };
+
+                foreach (DataRow fila in dt.Rows)
+                {
+                    factura.Detalles.Add(new Sunat.Ecuador.DetalleFactura
+                    {
+                        Codigo = fila[codigoCol].ToString(),
+                        Descripcion = fila[descCol].ToString(),
+                        Cantidad = Convert.ToDecimal(fila[cantCol]),
+                        PrecioUnitario = Convert.ToDecimal(fila[precioCol]),
+                        PrecioTotal = Convert.ToDecimal(fila[totalCol]),
+                        Descuento = 0
+                    });
+                }
+
+                string xml = Sunat.Ecuador.GeneradorXml.GenerarFactura(factura);
+                string ruta = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"factura_{idventa}.xml");
+                System.IO.File.WriteAllText(ruta, xml);
+                DialogService.Show($"Factura electrónica generada: {ruta}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                DialogService.Show($"Error al generar factura electrónica: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string ObtenerNombreColumna(DataTable dt, params string[] intentos)
+        {
+            foreach (string col in intentos)
+            {
+                if (dt.Columns.Contains(col)) return col;
+            }
+            return dt.Columns[0].ColumnName;
+        }
+
+        private void AplicarBotones(Control root)
+        {
+            if (root == null) return;
+            Button b = root as Button;
+            if (b != null) Theme.ButtonStyler.Apply(b, Theme.ButtonRole.Auto);
+            foreach (Control child in root.Controls) AplicarBotones(child);
         }
         private void ValidarAperturacaja()
         {
@@ -105,7 +206,7 @@ namespace OpenPOS.Presentacion.Ventas
             idcomprobante = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Entero(UtilesSeguros.Celda(dt, 0, 1), 1) : 1;
             Envioinmediato = dt != null && dt.Rows.Count > 0 ? UtilesSeguros.Celda(dt, 0, 2) : "";
             dibujarComprobantes();
-            validarPedidodeCliente();
+            Theme.Apply(dgDetalleventa);
         }
         private void dibujarComprobantes()
         {
@@ -423,7 +524,7 @@ namespace OpenPOS.Presentacion.Ventas
             }
             else
             {
-                MessageBox.Show("El restante debe ser 0", "Datos incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                DialogService.Show("El restante debe ser 0", "Datos incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
         private void validarTipopago()
@@ -432,15 +533,15 @@ namespace OpenPOS.Presentacion.Ventas
             contadorreferencia = txtreferencia.Text.Length;
             if ((Tipopago == "TARJETA" || Tipopago == "MIXTO") && txtreferencia.Text == "")
             {
-                MessageBox.Show("Ingrese los ultimos 4 digitos de la tarjeta");
+                DialogService.Show("Ingrese los últimos 4 dígitos de la tarjeta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if ((Tipopago == "TARJETA" || Tipopago == "MIXTO") && contadorreferencia < 4)
             {
-                MessageBox.Show("Ingrese los ultimos 4 digitos de la tarjeta");
+                DialogService.Show("Ingrese los últimos 4 dígitos de la tarjeta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if ((Tipopago == "TARJETA" || Tipopago == "MIXTO") && contadorreferencia > 4)
             {
-                MessageBox.Show("Ingrese los ultimos 4 digitos de la tarjeta");
+                DialogService.Show("Ingrese los últimos 4 dígitos de la tarjeta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -450,7 +551,7 @@ namespace OpenPOS.Presentacion.Ventas
                 }
                 else if (Tipopago == "EFECTIVO" && vuelto < 0)
                 {
-                    MessageBox.Show("El vuelto no puede ser menor a el Total pagado ", "Datos Incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    DialogService.Show("El vuelto no puede ser menor al total pagado", "Datos incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 if (Tipopago == "TARJETA")
                 {
@@ -482,7 +583,7 @@ namespace OpenPOS.Presentacion.Ventas
 
             if (Comprobante == "FACTURA" && idcliente == 0 && Tipopago != "CREDITO")
             {
-                MessageBox.Show("Seleccione un Cliente, para Facturas es Obligatorio", "Datos Incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                DialogService.Show("Seleccione un Cliente, para Facturas es Obligatorio", "Datos incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (Comprobante == "FACTURA" && idcliente != 0)
             {
@@ -502,7 +603,7 @@ namespace OpenPOS.Presentacion.Ventas
                 }
                 else
                 {
-                    MessageBox.Show("Seleccione un Cliente", "Datos Incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    DialogService.Show("Seleccione un Cliente", "Datos incorrectos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
             }
@@ -1114,8 +1215,8 @@ namespace OpenPOS.Presentacion.Ventas
         {
             if (dgDetalleventa.RowCount > 0)
             {
-                DialogResult pregunta = MessageBox.Show("¿Realmente desea eliminar esta Venta?", "Eliminando registros", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (pregunta == DialogResult.OK)
+                var r = DialogService.Show("¿Realmente desea eliminar esta Venta?", "Eliminando registros", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (r == DialogResultCustom.OK)
                 {
                     var funcion = new Dventas();
                     var parametros = new Lventas();

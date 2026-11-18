@@ -106,6 +106,7 @@
     <Compile Include="CONEXION\total_en_letras.cs" />
     <Compile Include="CONEXION\WinAutoComplete.cs" />
     <Compile Include="UI\Theme.cs" />
+    <Compile Include="UI\DialogService.cs" />
     <Compile Include="UI\InstallConsole.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -176,6 +177,14 @@
     <Compile Include="Sunat\Logica\Lserializacion.cs" />
     <Compile Include="Sunat\Logica\Lticket.cs" />
     <Compile Include="Sunat\Logica\Ltiponotacredito.cs" />
+    <Compile Include="Sunat\Ecuador\FirmaDigital.cs" />
+    <Compile Include="Sunat\Ecuador\GeneradorXml.cs" />
+    <Compile Include="Sunat\Ecuador\AutorizadorSri.cs" />
+    <Compile Include="Sunat\Ecuador\Modelos\FacturaElectronica.cs" />
+    <Compile Include="Sunat\Ecuador\Modelos\NotaCredito.cs" />
+    <Compile Include="Sunat\Ecuador\Modelos\NotaDebito.cs" />
+    <Compile Include="Sunat\Ecuador\Modelos\GuiaRemision.cs" />
+    <Compile Include="Sunat\Ecuador\Modelos\Retencion.cs" />
     <Compile Include="Sunat\Logica\LunidadM.cs" />
     <Compile Include="Logica\Lusuarios.cs" />
     <Compile Include="Logica\PasswordHasher.cs" />
@@ -336,6 +345,12 @@
     </Compile>
     <Compile Include="Presentacion\Configuraciones\MenuConfig.Designer.cs">
       <DependentUpon>MenuConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Configuraciones\ConfiguracionSri.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Configuraciones\ConfiguracionSri.Designer.cs">
+      <DependentUpon>ConfiguracionSri.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Configuraciones\Respaldosconfig.cs">
       <SubType>UserControl</SubType>

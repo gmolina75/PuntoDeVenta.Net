@@ -28,7 +28,8 @@ namespace OpenPOS.UI
         public static readonly Color Surface = Color.White;
         public static readonly Color SurfaceAlt = Color.FromArgb(246, 248, 252);
         public static readonly Color GridAltRow = Color.FromArgb(245, 247, 251);
-        public static readonly Color GridSelection = Color.FromArgb(216, 235, 250);
+        public static readonly Color GridSelection = Color.FromArgb(8, 182, 201);
+        public static readonly Color GridHover = Color.FromArgb(232, 248, 250);
         public static readonly Color Border = Color.FromArgb(214, 220, 230);
         public static readonly Color Text = Color.FromArgb(33, 37, 41);
         public static readonly Color Muted = Color.FromArgb(70, 81, 95);
@@ -378,24 +379,88 @@ namespace OpenPOS.UI
             }
         }
 
+    public enum ButtonRole { Auto, Primary, Secondary, Ghost, Danger }
+
+        internal static ButtonRole InferRole(Button b)
+        {
+            string t = (b.Text ?? "").Trim().ToUpperInvariant();
+            if (t.Contains("ELIMINAR") || t.Contains("BORRAR") || t.Contains("CANCELAR"))
+                return ButtonRole.Danger;
+            if (t.Contains("GUARDAR") || t.Contains("COBRAR") || t.Contains("CONFIRMAR") || t.Contains("ACEPTAR"))
+                return ButtonRole.Primary;
+            if (t.Contains("VOLVER") || t.Contains("ATRÁS") || t.Contains("SALIR"))
+                return ButtonRole.Ghost;
+            return ButtonRole.Auto;
+        }
+
+        internal static void StyleByRole(Button b, ButtonRole role)
+        {
+            b.FlatStyle = FlatStyle.Flat;
+            b.UseVisualStyleBackColor = false;
+            b.FlatAppearance.BorderSize = 0;
+            b.Cursor = Cursors.Hand;
+            switch (role)
+            {
+                case ButtonRole.Primary:
+                    b.BackColor = Primary;
+                    b.ForeColor = Color.White;
+                    b.FlatAppearance.MouseOverBackColor = Accent;
+                    b.FlatAppearance.MouseDownBackColor = PrimaryDark;
+                    break;
+                case ButtonRole.Secondary:
+                    b.BackColor = SurfaceAlt;
+                    b.ForeColor = Text;
+                    b.FlatAppearance.BorderColor = Border;
+                    b.FlatAppearance.BorderSize = 1;
+                    b.FlatAppearance.MouseOverBackColor = GridAltRow;
+                    b.FlatAppearance.MouseDownBackColor = Border;
+                    break;
+                case ButtonRole.Ghost:
+                    b.BackColor = Surface;
+                    b.ForeColor = Muted;
+                    b.FlatAppearance.BorderSize = 0;
+                    b.FlatAppearance.MouseOverBackColor = GridAltRow;
+                    b.FlatAppearance.MouseDownBackColor = Border;
+                    break;
+                case ButtonRole.Danger:
+                    b.BackColor = Danger;
+                    b.ForeColor = Color.White;
+                    b.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 80, 80);
+                    b.FlatAppearance.MouseDownBackColor = Color.FromArgb(190, 45, 45);
+                    break;
+                default:
+                    b.BackColor = Primary;
+                    b.ForeColor = Color.White;
+                    b.FlatAppearance.MouseOverBackColor = Accent;
+                    b.FlatAppearance.MouseDownBackColor = PrimaryDark;
+                    break;
+            }
+        }
+
+        public static class ButtonStyler
+        {
+            public static void Apply(Button b, ButtonRole role = ButtonRole.Auto)
+            {
+                if (b == null) return;
+                if (b.BackgroundImage != null || b.Image != null || b.BackColor == Color.Transparent) return;
+                if (b.FlatStyle == FlatStyle.System) return;
+                if (role == ButtonRole.Auto) role = InferRole(b);
+                StyleByRole(b, role);
+                b.EnabledChanged -= OnButtonEnabledChanged;
+                b.EnabledChanged += OnButtonEnabledChanged;
+            }
+        }
+
         private static void ApplyButton(Button b)
         {
-            // Preserve custom skins / icon buttons and transparent buttons.
             if (b.BackgroundImage != null) return;
             if (b.Image != null) return;
             if (b.BackColor == Color.Transparent) return;
             if (b.FlatStyle == FlatStyle.System) return;
 
-            b.FlatStyle = FlatStyle.Flat;
-            b.UseVisualStyleBackColor = false;
-            b.FlatAppearance.BorderSize = 0;
-            b.BackColor = Primary;
-            b.ForeColor = Color.White;
-            b.Cursor = Cursors.Hand;
-            b.FlatAppearance.MouseOverBackColor = Accent;
-            b.FlatAppearance.MouseDownBackColor = PrimaryDark;
+            ButtonRole role = InferRole(b);
+            StyleByRole(b, role);
 
-            // Estado "deshabilitado": el botón se atenúa y restaura solo.
             b.EnabledChanged -= OnButtonEnabledChanged;
             b.EnabledChanged += OnButtonEnabledChanged;
         }
@@ -449,6 +514,25 @@ namespace OpenPOS.UI
             if (c.DropDownStyle == ComboBoxStyle.Simple) return;
             c.BackColor = Surface;
             c.ForeColor = Text;
+
+            c.GotFocus -= OnComboFocus;
+            c.LostFocus -= OnComboBlur;
+            c.GotFocus += OnComboFocus;
+            c.LostFocus += OnComboBlur;
+        }
+
+        private static void OnComboFocus(object sender, EventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            if (cb == null) return;
+            cb.BackColor = FocusBack;
+        }
+
+        private static void OnComboBlur(object sender, EventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            if (cb == null) return;
+            cb.BackColor = Surface;
         }
 
         private static void ApplyGrid(DataGridView g)
@@ -459,7 +543,7 @@ namespace OpenPOS.UI
                 g.BackgroundColor = Surface;
                 g.BorderStyle = BorderStyle.None;
                 g.GridColor = Border;
-                g.RowTemplate.Height = 28;
+                g.RowTemplate.Height = 32;
 
                 DataGridViewCellStyle header = g.ColumnHeadersDefaultCellStyle;
                 header.BackColor = Primary;
@@ -468,17 +552,20 @@ namespace OpenPOS.UI
                 header.SelectionForeColor = Color.White;
                 header.Font = GetFont(g.Font.SizeInPoints, FontStyle.Bold);
                 header.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
+                header.Padding = new Padding(8, 6, 8, 6);
                 g.ColumnHeadersDefaultCellStyle = header;
+                g.ColumnHeadersHeight = 36;
 
                 DataGridViewCellStyle body = g.DefaultCellStyle;
                 body.SelectionBackColor = GridSelection;
-                body.SelectionForeColor = Text;
+                body.SelectionForeColor = Color.White;
                 body.ForeColor = Text;
+                body.Padding = new Padding(8, 4, 8, 4);
                 g.DefaultCellStyle = body;
 
                 g.AlternatingRowsDefaultCellStyle.BackColor = GridAltRow;
                 g.AlternatingRowsDefaultCellStyle.SelectionBackColor = GridSelection;
+                g.AlternatingRowsDefaultCellStyle.SelectionForeColor = Color.White;
 
                 // Grillas claras: el texto de fila nunca queda blanco sobre blanco.
                 DataGridViewCellStyle rowStyle = g.RowTemplate.DefaultCellStyle;
@@ -489,11 +576,32 @@ namespace OpenPOS.UI
                     rowStyle.ForeColor = Text;
                     g.RowTemplate.DefaultCellStyle = rowStyle;
                 }
+
+                g.CellMouseEnter -= OnGridCellEnter;
+                g.CellMouseLeave -= OnGridCellLeave;
+                g.CellMouseEnter += OnGridCellEnter;
+                g.CellMouseLeave += OnGridCellLeave;
             }
             catch
             {
-                // leave grid untouched if a style cannot be applied
             }
+        }
+
+        private static void OnGridCellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView g = sender as DataGridView;
+            if (g == null || e.RowIndex < 0 || e.RowIndex >= g.Rows.Count) return;
+            if (g.Rows[e.RowIndex].Selected) return;
+            g.Rows[e.RowIndex].DefaultCellStyle.BackColor = GridHover;
+        }
+
+        private static void OnGridCellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView g = sender as DataGridView;
+            if (g == null || e.RowIndex < 0 || e.RowIndex >= g.Rows.Count) return;
+            if (g.Rows[e.RowIndex].Selected) return;
+            bool alt = (e.RowIndex % 2 == 1);
+            g.Rows[e.RowIndex].DefaultCellStyle.BackColor = alt ? GridAltRow : Color.Empty;
         }
 
         // ---- Helpers -------------------------------------------------------

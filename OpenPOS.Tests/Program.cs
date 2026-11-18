@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using OpenPOS.CONEXION;
 using OpenPOS.Presentacion.Asistenteinstalacion;
 using OpenPOS.UI;
+using OpenPOS.Sunat.Ecuador;
 
 namespace OpenPOS.Tests
 {
@@ -230,6 +231,36 @@ namespace OpenPOS.Tests
                     Assert(dlg.Text.Contains("Datos de instalación"), "Título inesperado: " + dlg.Text);
                     Assert(dlg.Resultado == null, "No debe haber resultado antes de confirmar");
                 }
+            });
+
+            Check("Factura electronica SRI 2.0.0 genera XML valido", () =>
+            {
+                var factura = new OpenPOS.Sunat.Ecuador.FacturaElectronica
+                {
+                    Ruc = "0999999999001",
+                    PuntoEmision = "001",
+                    Secuencial = 12345,
+                    FechaEmision = DateTime.Now,
+                    RazonSocialComprador = "CLIENTE DE PRUEBA SA",
+                    IdentificacionComprador = "0999999999001",
+                    TotalSinImpuestos = 100.00m,
+                    Total = 112.00m
+                };
+                factura.Detalles.Add(new OpenPOS.Sunat.Ecuador.DetalleFactura
+                {
+                    Codigo = "PROD001",
+                    Descripcion = "Producto de prueba",
+                    Cantidad = 1,
+                    PrecioUnitario = 100.00m,
+                    PrecioTotal = 100.00m,
+                    Descuento = 0
+                });
+
+                string xml = OpenPOS.Sunat.Ecuador.GeneradorXml.GenerarFactura(factura);
+                Assert(xml.Contains(@"version=""2.0.0"""), "El XML debe tener version 2.0.0");
+                Assert(xml.Contains("0999999999001"), "El XML debe contener el RUC");
+                Assert(xml.Contains("<codDoc>01"), "El XML debe contener codDoc 01 (factura)");
+                Assert(xml.Contains("http://www.sri.gob.ec/factura/"), "El XML debe tener el namespace del SRI");
             });
 
             Console.WriteLine();
