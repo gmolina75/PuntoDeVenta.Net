@@ -203,6 +203,11 @@
     <Compile Include="Presentacion\Configuraciones\Usuariosconfig.Designer.cs">
       <DependentUpon>Usuariosconfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentacion\Restaurante\Mesa.cs" />
+    <Compile Include="Presentacion\Restaurante\MapaMesas.cs" />
+    <Compile Include="Presentacion\Restaurante\MenuModels.cs" />
+    <Compile Include="Presentacion\Restaurante\PanelMesas.cs" />
+    <Compile Include="Presentacion\Restaurante\ProgramaFidelizacion.cs" />
     <Compile Include="Presentacion\Dashboard\Panelcontrol.cs">
       <SubType>UserControl</SubType>
     </Compile>

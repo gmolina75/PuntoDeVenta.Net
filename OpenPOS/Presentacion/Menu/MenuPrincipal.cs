@@ -4,6 +4,7 @@ using OpenPOS.Presentacion.CAJA;
 using OpenPOS.Presentacion.Configuraciones;
 using OpenPOS.Presentacion.Dashboard;
 using OpenPOS.Presentacion.Inventarios;
+using OpenPOS.Presentacion.Restaurante;
 using OpenPOS.Presentacion.REPORTES;
 using OpenPOS.Presentacion.SunatForms;
 using OpenPOS.Presentacion.Ventas;
@@ -69,7 +70,7 @@ namespace OpenPOS.Presentacion.Menu
         private void DibujarBotones()
         {
             panelbotones.Controls.Clear();
-            var botones = new string[] { "Vender", "SUNAT", "Configuraciones", "Reportes", "Inventarios", "Panel control" };
+            var botones = new string[] { "Vender", "Mesas", "Fidelización", "SUNAT", "Configuraciones", "Reportes", "Inventarios", "Panel control" };
 
             foreach (string boton in botones)
             {
@@ -114,6 +115,14 @@ namespace OpenPOS.Presentacion.Menu
             {
                 Sunat();
             }
+            else if (texto == "Mesas")
+            {
+                Mesas();
+            }
+            else if (texto == "Fidelización")
+            {
+                Fidelizacion();
+            }
             else if (texto == "Vender")
             {
                 Vender();
@@ -139,6 +148,20 @@ namespace OpenPOS.Presentacion.Menu
         {
             panelVisor.Controls.Clear();
             var ctl = new Menuinv();
+            ctl.Dock = DockStyle.Fill;
+            panelVisor.Controls.Add(ctl);
+        }
+        private void Mesas()
+        {
+            panelVisor.Controls.Clear();
+            var ctl = new MapaMesas();
+            ctl.Dock = DockStyle.Fill;
+            panelVisor.Controls.Add(ctl);
+        }
+        private void Fidelizacion()
+        {
+            panelVisor.Controls.Clear();
+            var ctl = new ProgramaFidelizacion();
             ctl.Dock = DockStyle.Fill;
             panelVisor.Controls.Add(ctl);
         }
